@@ -1,0 +1,30 @@
+<h1 class="font-bold text-4xl">
+  <%= data_set.name %>
+</h1>
+
+<p class="my-5 text-gray-700 text-base mb-4">
+  <strong class="block font-medium mb-1">Location:</strong>
+  <%= data_set.city %>, <%= data_set.state %>
+</p>
+
+<p class="my-5 text-gray-700 text-base mb-4">
+  <strong class="block font-medium mb-1">Timeframe:</strong>
+  <%= data_set.start_date %> -
+  <%= data_set.end_date %>
+</p>
+
+<p class="my-5 text-gray-700 text-base mb-4">
+  <strong class="block font-medium mb-1">
+    Data Files:
+  </strong>
+  <% data_set.files.each do |file| %>
+    <%= link_to rails_blob_path(file, disposition: :attachment), class: 'underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out' do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clip-rule="evenodd" />
+      </svg>
+      <%= file.filename %>
+    <% end %>
+    (Uploaded at <%= time_ago_in_words file.created_at %> ago)
+    <br>
+  <% end %>
+</p>
