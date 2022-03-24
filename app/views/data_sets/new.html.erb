@@ -1,5 +1,12 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-3xl">New Data Set</h1>
+<div class="mx-auto md:w-3/4 w-full">
+  <%= render partial: 'data_set_steps', locals: {
+    text: %w[text-indigo-600 text-gray-500 text-gray-500],
+    borders: %w[border-indigo-600 border-gray-200 border-gray-200],
+  } %>
+
+  <br>
+
+  <h1 class="font-bold text-3xl">New DataSet</h1>
 
   <%= render "form", data_set: @data_set %>
 

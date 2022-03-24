@@ -6,7 +6,9 @@ class CreateDataSets < ActiveRecord::Migration[7.0]
       t.string :state
       t.datetime :start_date
       t.datetime :end_date
-      t.string :filename
+      t.integer :rows
+      t.string :headers
+
 
       t.timestamps
     end

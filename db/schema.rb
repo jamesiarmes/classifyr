@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_23_175220) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_24_152534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_23_175220) do
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.integer "row_count", default: 0
+    t.string "headers"
+    t.date "start_date"
+    t.date "end_date"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -51,6 +55,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_23_175220) do
     t.string "filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fields", force: :cascade do |t|
+    t.bigint "data_set_id"
+    t.string "heading"
+    t.integer "position"
+    t.string "common_type"
+    t.string "common_format"
+    t.integer "unique_value_count"
+    t.integer "empty_value_count"
+    t.text "sample_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data_set_id"], name: "index_fields_on_data_set_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
