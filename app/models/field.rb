@@ -1,4 +1,5 @@
 class Field < ApplicationRecord
+  has_many  :unique_values
   belongs_to  :data_set
 
   TYPES = ['', 'Emergency Category', 'Call Category', 'Detailed Call Type',
@@ -12,6 +13,6 @@ class Field < ApplicationRecord
   VALUE_TYPES = ['Emergency Category', 'Call Category', 'Detailed Call Type', 'Call Disposition', 'Priority']
 
   def self.mapped
-    where('common_type IS NOT NULL AND common_type != ""')
+    where("common_type IS NOT NULL AND common_type != ''")
   end
 end

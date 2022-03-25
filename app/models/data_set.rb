@@ -8,6 +8,34 @@ class DataSet < ApplicationRecord
     files.first
   end
 
+  def emergency_categories
+    fields.find_by(common_type: 'Emergency Category').unique_values.order(:value)
+  end
+
+  def call_categories
+    fields.find_by(common_type: 'Call Category').unique_values.order(:value)
+  end
+
+  def detailed_call_types
+    fields.find_by(common_type: 'Detailed Call Type').unique_values.order(:frequency)
+  end
+
+  def priorities
+    fields.find_by(common_type: 'Priority').unique_values.order(:value)
+  end
+
+  def start_time
+    if fields.find_by(common_type: 'Call Time')&.min_value
+      DateTime.parse fields.find_by(common_type: 'Call Time').min_value
+    end
+  end
+
+  def end_time
+    if fields.find_by(common_type: 'Call Time')&.max_value
+      DateTime.parse fields.find_by(common_type: 'Call Time').max_value
+    end
+  end
+
   def prepare_datamap
     if fields.empty?
       set_metadata!
@@ -31,19 +59,28 @@ class DataSet < ApplicationRecord
   end
 
   def analyze!
-    ordered_fields = fields.order('position asc')
+    return if analyzed?
 
     datafile.with_file do |f|
       fields.mapped.each do |field|
-        if field.common_type == 'Call Time'
-          # parse dates and find earliest / latest
+        # if field.common_type == 'Call Time'
+        #   # parse dates and find earliest / latest
+        # end
+
+        field.min_value = `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort | uniq | head -1`&.chomp
+        field.max_value = `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
+
+        if Field::VALUE_TYPES.include? field.common_type
+          `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort -rn | uniq -c`.split("\n").each do |line|
+            x = line.strip.split
+            field.unique_values.build value: x[1], frequency: x[0]
+          end
         end
 
-        next unless Field::VALUE_TYPES.include? field.common_type
-        field.min_value = `tail -n +2 police-incidents-2022.csv | cut -d, -f#{field.position} | sort | uniq | head -1`&.chomp
-        field.max_value = `tail -n +2 police-incidents-2022.csv | cut -d, -f#{field.position} | sort | uniq | tail -1`&.chomp
         field.save!
       end
     end
+
+    update_attribute :analyzed, true
   end
 end

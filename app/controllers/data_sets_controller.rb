@@ -51,7 +51,7 @@ class DataSetsController < ApplicationController
   end
 
   def analyze
-    @data_set.analyze!
+    @data_set.analyze! unless @data_set.analyzed?
   end
 
   private
