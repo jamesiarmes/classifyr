@@ -9,6 +9,8 @@ class CreateFields < ActiveRecord::Migration[7.0]
       t.integer :unique_value_count
       t.integer :empty_value_count
       t.text  :sample_data
+      t.string :min_value
+      t.string :max_value
 
       t.timestamps
     end

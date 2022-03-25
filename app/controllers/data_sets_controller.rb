@@ -26,7 +26,13 @@ class DataSetsController < ApplicationController
   end
 
   def update
-    if @data_set.update(data_set_params)
+    if params['data_set']['step'] == 'map_fields'
+      params['data_set']['common_types'].each do |position, common_type|
+        common_type = nil if common_type.blank?
+        @data_set.fields.find_by(position: position).update(common_type: common_type)
+      end
+      redirect_to analyze_data_set_url(@data_set), notice: "Fields were successfully mapped."
+    elsif @data_set.update(data_set_params)
       redirect_to data_set_url(@data_set), notice: "Data set was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -41,12 +47,11 @@ class DataSetsController < ApplicationController
 
   def map
     @data_set.prepare_datamap
+    @fields = @data_set.fields.order('position asc')
   end
 
   def analyze
-    @data_set.analyze_files!
-
-    redirect_to data_sets_path
+    @data_set.analyze!
   end
 
   private

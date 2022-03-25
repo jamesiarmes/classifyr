@@ -22,6 +22,8 @@
   <%= form_with(model: @data_set, class: "contents") do |form| %>
     <%= render partial: 'errors', locals: {data_set: @data_set} %>
 
+    <%= form.hidden_field :step, value: 'map_fields' %>
+
 
     <div id="data_sets" class="flex flex-col">
       <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -39,7 +41,7 @@
               </thead>
               <tbody>
 
-              <% @data_set.fields.each_with_index do |field, position| %>
+              <% @fields.each_with_index do |field, position| %>
                 <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <%= position %>
@@ -55,7 +57,7 @@
                     <%= field.empty_value_count %>
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    <%= form.select :common_type, Field::TYPES, {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+                    <%= form.select "common_types[#{position}]", options_for_select(Field::TYPES, field.common_type), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
                   </td>
                 </tr>
               <% end %>
@@ -70,7 +72,7 @@
     <br>
 
     <div class="inline">
-      <%= form.submit value: 'Map Fields', class: "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" %>
+      <%= form.submit value: 'Map Data Fields', class: "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" %>
     </div>
   <% end %>
   <br>
