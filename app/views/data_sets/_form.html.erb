@@ -11,30 +11,129 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+
+  <div class="sm:col-span-6">
+    <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :title, placeholder: 'The name as listed on web page or report', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
   </div>
 
-  <div class="my-5">
-    <%= form.label :city %>
-    <%= form.text_field :city, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+
+    <div class="mt-1">
+      <%= form.text_area :description, rows: 3, placeholder: 'Describe this data set from web page or report if possible, or in your own words if no explanation is provided.', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
   </div>
 
-  <div class="my-5">
-    <%= form.label :state %>
-
-    <%= form.select :state, options_for_select(us_states), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :source, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :source, placeholder: 'The organization providing the data', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
   </div>
 
-  <div class="field">
-  </div>
-  <div class="my-5">
-    <%= form.label :files %>
-    <%= form.file_field :files, multiple: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :data_link, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :data_link, placeholder: 'Complete URL to original source / owner of data.', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
   </div>
 
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :documentation_link, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :documentation_link, placeholder: 'Complete URL to online documentation, data dictionary, etc.', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :api_links, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_area :api_links, rows: 2, placeholder: 'Links to application programming interfaces, if available.  Add one link per line.', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :license, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :license, placeholder: 'Intellectual property legal conditions for use of the data. Default is "presumed copyright" unless otherwise stated.', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :format, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.select :format, options_for_select(['', 'OpenGov', 'Socrata', 'ArcGIS'], data_set.format), {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+    </div>
+  </div>
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :exclusions, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_area :exclusions, rows: 2, placeholder: 'List types of records excluded from the dataset. See this example: http://gisapps1.mapoakland.com/callsforservice/', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :city, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :city, placeholder: 'City or county where the data are reported', class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="sm:col-span-6 my-4">
+    <%= form.label :state, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.select :state, options_for_select(us_states, data_set.state), {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
+    </div>
+  </div>
+
+  <% if action_name == 'new' %>
+    <div class="sm:col-span-6 my-4">
+      <%= form.label :files, class: "block text-sm font-medium text-gray-700" %>
+      <div class="mt-1">
+        <%= form.file_field :files, multiple: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mb-12">
+    <fieldset>
+      <div class="mt-4 space-y-4">
+        <div class="relative flex items-start">
+          <div class="flex items-center h-5">
+            <%= form.check_box :has_911, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="data_set_has_911" class="font-medium text-gray-700">911 Data</label>
+            <p class="text-gray-500">This data set includes calls to 911.</p>
+          </div>
+        </div>
+        <div class="relative flex items-start">
+          <div class="flex items-center h-5">
+            <%= form.check_box :has_fire, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="data_set_has_fire" class="font-medium text-gray-700">Fire Data</label>
+            <p class="text-gray-500">This data set includes fire department calls.</p>
+          </div>
+        </div>
+        <div class="relative flex items-start">
+          <div class="flex items-center h-5">
+            <%= form.check_box :has_ems, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="data_set_has_ems" class="font-medium text-gray-700">EMS Data</label>
+            <p class="text-gray-500">This data set includes EMS calls.</p>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
   <div class="inline">
-    <%= form.submit value: 'Upload DataSet', class: "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" %>
+    <%= form.submit value: action_name == 'new' ? 'Upload DataSet' : 'Update DataSet', class: "relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
 <% end %>

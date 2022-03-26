@@ -15,4 +15,16 @@ class Field < ApplicationRecord
   def self.mapped
     where("common_type IS NOT NULL AND common_type != ''")
   end
+
+  def has_values?
+    VALUE_TYPES.include? common_type
+  end
+
+  def self.with_values
+    where(common_type: VALUE_TYPES)
+  end
+
+  def self.without_values
+    where.not(common_type: VALUE_TYPES)
+  end
 end

@@ -1,0 +1,76 @@
+<tr>
+  <th class="text-left  space-x-12">
+    <%= field.common_type %>
+  </th>
+  <td>
+    &nbsp;
+    &nbsp;
+  </td>
+  <td>
+    <div class="flex flex-wrap">
+      <div class="w-full text-center">
+        <% if field.has_values? %>
+          <button class="text-sm underline px-6 py-3 mr-1 mb-1 ease-linear transition-all duration-150" type="button" onclick="openPopover(event,'popover-<%= field.id %>')">
+            <%= field.heading %>
+          </button>
+          <div class="hidden popover shadow-lg bg-white border-1 border-solid ml-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg" id="popover-<%= field.id %>">
+            <div class="popover-header">
+              <div class="font-semibold p-3 mb-0 border-b border-solid border-gray-300 uppercase rounded-t-lg">
+                <%= field.heading %> Details
+              </div>
+              <div class="p-3 popover-body">
+                <% if field.unique_values.empty? %>
+                <% else %>
+                  <table class="table-auto">
+                    <% field.unique_values.order(:value).each do |val|  %>
+                      <tr>
+                        <td class="text-left  space-x-12">
+                          <%= val.value %>
+                        </td>
+                        <td>
+                          &nbsp;
+                          &nbsp;
+                        </td>
+                        <td>
+                          <%= val.frequency %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </table>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+          <button class="text-sm px-6 py-3 mr-1 mb-1 ease-linear transition-all duration-150" style="pointer-events: none;">
+            <%= field.heading %>
+          </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
+    <script>
+        function openPopover(event,popoverID){
+            let element = event.target;
+            while(element.nodeName !== "BUTTON"){
+                element = element.parentNode;
+            }
+            var popper = Popper.createPopper(element, document.getElementById(popoverID), {
+                placement: 'bottom'
+            });
+            document.getElementById(popoverID).classList.toggle("hidden");
+        }
+    </script>
+  </td>
+  <td>
+    &nbsp;
+    &nbsp;
+  </td>
+  <td>
+    <%= field.unique_value_count %>
+  </td>
+  <td>
+    &nbsp;
+    &nbsp;
+  </td>
+</tr>

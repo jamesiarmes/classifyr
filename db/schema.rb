@@ -47,11 +47,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_120925) do
   end
 
   create_table "data_sets", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
+    t.string "data_link"
+    t.string "documentation_link"
+    t.string "api_links"
+    t.string "source"
+    t.string "exclusions"
+    t.string "format"
+    t.text "license"
+    t.text "description"
     t.string "city"
     t.string "state"
-    t.integer "rows"
     t.string "headers"
+    t.boolean "has_911"
+    t.boolean "has_fire"
+    t.boolean "has_ems"
     t.boolean "analyzed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

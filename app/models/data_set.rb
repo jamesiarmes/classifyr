@@ -4,6 +4,14 @@ class DataSet < ApplicationRecord
 
   attr_accessor :step
 
+  def storage_size
+    files.map(&:byte_size).sum
+  end
+
+  def row_count
+    files.sum(&:row_count)
+  end
+
   def datafile
     files.first
   end
@@ -33,6 +41,16 @@ class DataSet < ApplicationRecord
   def end_time
     if fields.find_by(common_type: 'Call Time')&.max_value
       DateTime.parse fields.find_by(common_type: 'Call Time').max_value
+    end
+  end
+
+  def timeframe(full = false)
+    return unless start_time && end_time
+
+    if full
+      "#{start_time.to_date.to_fs(:display_date)} thru #{end_time.to_date.to_fs(:display_date)}"
+    else
+      "#{start_time.to_date.to_fs(:short_date)} - #{end_time.to_date.to_fs(:short_date)}"
     end
   end
 

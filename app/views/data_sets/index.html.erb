@@ -3,24 +3,10 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center mb-5">
-    <h1 class="font-bold text-3xl">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 inline-block" viewBox="0 0 22 22" fill="currentColor">
-        <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z" />
-        <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
-        <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
-      </svg>
-      DataSets
-    </h1>
-    <%= link_to new_data_set_path, class: "rounded-lg py-2 px-4 bg-blue-600 text-white block font-medium" do %>
-      New
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-      </svg>
-    <% end %>
-  </div>
+  <%= render partial: 'shared/card_head', locals: {title: 'Data Sets', description: "List of the public data sets uploaded by Code for America's National Action Team.",
+                                                   button: {label: 'Upload DataSet', path: new_data_set_path}} %>
 
-  <div id="data_sets" class="flex flex-col">
+  <div id="data_sets" class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div class="overflow-hidden">
@@ -28,8 +14,8 @@
             <thead class="bg-gray-50 border-b">
             <tr>
               <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">City</th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">State</th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Location</th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Timeframe</th>
               <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Files</th>
               <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Rows</th>
               <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Fields</th>
@@ -41,10 +27,10 @@
             <% @data_sets.each do |data_set| %>
               <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <%= link_to data_set.name, data_set %>
+                  <%= link_to data_set.title, data_set %>
                 </td>
-                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><%= data_set.city %></td>
-                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><%= data_set.state %></td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><%= data_set.city %>, <%= data_set.state %></td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><%= data_set.timeframe %></td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   <% data_set.files.each do |file| %>
                     <%= file.filename %>
@@ -52,7 +38,7 @@
                   <% end %>
                 </td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <%= data_set.files.sum(&:row_count) %>
+                  <%= data_set.row_count %>
                 </td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   <%= data_set.datafile.headers ? data_set.files.first.headers.split(',').count : 0 %>
