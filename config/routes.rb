@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :common_incident_types, only: [] do
+    collection do
+      get 'search'
+    end
+  end
+
   resources :classifications
 
   root 'data_sets#index'
