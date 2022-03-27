@@ -1,8 +1,7 @@
 TODO:
 + Fix duplicate "unique values" - splitting our all whitespace...
-+ Categorizer interface
-	- Give UNCLEAR / UNKNOWN option (with warning text saying preferred)
-
++ Auto Completer
++ Add Tags
 
 - Required fields for data sets
 - Support for multiple files and ensuring same headings
