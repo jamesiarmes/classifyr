@@ -1,0 +1,60 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+    <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
+      <div class="ml-4 mt-4">
+
+        <div class="pb-5 border-b border-gray-200 sm:pb-0">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Classification</h3>
+          <p class="mt-1 text-sm text-gray-500">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <br>
+
+          <div class="mt-3 sm:mt-4">
+            <!-- Dropdown menu on small screens -->
+            <div class="sm:hidden">
+              <label for="current-tab" class="sr-only">Select a tab</label>
+              <select id="current-tab" name="current-tab" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option>Dispositions</option>
+
+                <option>Priorities</option>
+
+                <option selected>Call Types</option>
+
+              </select>
+            </div>
+            <!-- Tabs at small breakpoint and up -->
+            <div class="hidden sm:block">
+              <nav class="-mb-px flex space-x-8">
+                <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm">
+                  Dispositions </a>
+
+                <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm">
+                  Priorities </a>
+
+                <a href="#" class="border-indigo-500 text-indigo-600 whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
+                  Call Types </a>
+
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto mt-8 sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="overflow-hidden">
+          <%= render 'classifications/classify' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

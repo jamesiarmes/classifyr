@@ -1,0 +1,20 @@
+TODO:
++ Fix duplicate "unique values" - splitting our all whitespace...
++ Categorizer interface
+	- Give UNCLEAR / UNKNOWN option (with warning text saying preferred)
+
+
+- Required fields for data sets
+- Support for multiple files and ensuring same headings
+- Add authentication and user support
+- Add running comments to data sets
+- Add actual roles and enforce them
+- Highlight active controller in side nav
+- Add files to an existing data set (only accept new lines - do a diff from all files)
+- Classification - show "similar" detailed call types using pg_tgrm (trigrams) extension 
+- Classification - add tags
+- Classification - multiple people classifying the data
+- Categorizer - show "similar" detailed call types using pg_tgrm (trigrams) extension
+- APCO - different display labels (and full descriptions)
+- Rate your certainty???
+- Also choose the call categories (and emergency type/origin?) this applies to???

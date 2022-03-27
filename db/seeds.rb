@@ -1,7 +1,151 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+require 'csv'
+
+ds = DataSet.create!(
+                       {title: "Burlington, VT Police Incidents", data_link: "https://data.burlingtonvt.gov/explore/?refine.theme=Public+Safety&disjunctive.theme&disjunctive.publisher&disjunctive.keyword&sort=modified", documentation_link: "https://data.burlingtonvt.gov/explore/dataset/police-incidents-2021/information/", api_links: "https://data.burlingtonvt.gov/explore/dataset/police-incidents-2021/api/", source: "Burlington Police Department; contact  jlarson@burlingtonvt.gov", exclusions: "\"the most sensitive types of calls,\" not specified", format: "OpenGov", license: "Open Data Commons Open Database License (ODbL) https://opendatacommons.org/licenses/odbl/", description: "Incident level data for all call types in 2021 from the Valcour database. Variables include type of call, origin of call (Officer, Phone, etc), call time and street. It also includes an approximate latitude and longitude for mapping, for all but the most sensitive types of calls.", city: "Burlington", state: "VT", headers: nil, has_911: true, has_fire: false, has_ems: false, analyzed: true}
+                     )
+ds.fields.create!([
+                    {heading: "Street", position: 4, common_type: nil, common_format: nil, unique_value_count: 617, empty_value_count: 0, sample_data: "127/Plattsburg Ave\n59 1/2 North St\nAVE C\nAdams Ct\nAdams St\nAdsit Ct/N Willard St\nAirport Dr\nAlder Ln\nAllen St\nAppletree Point Rd\n", min_value: nil, max_value: nil},
+                    {heading: "mental_health", position: 6, common_type: nil, common_format: nil, unique_value_count: 2, empty_value_count: 0, sample_data: "0\n1\n", min_value: nil, max_value: nil},
+                    {heading: "drug_related", position: 7, common_type: nil, common_format: nil, unique_value_count: 2, empty_value_count: 0, sample_data: "0\n1\n", min_value: nil, max_value: nil},
+                    {heading: "dv_related", position: 8, common_type: nil, common_format: nil, unique_value_count: 2, empty_value_count: 0, sample_data: "0\n1\n", min_value: nil, max_value: nil},
+                    {heading: "alcohol_related", position: 9, common_type: nil, common_format: nil, unique_value_count: 2, empty_value_count: 0, sample_data: "0\n1\n", min_value: nil, max_value: nil},
+                    {heading: "Area", position: 10, common_type: nil, common_format: nil, unique_value_count: 7, empty_value_count: 0, sample_data: "A\nAirport\nB\nC\nD\nE\nNA\n", min_value: nil, max_value: nil},
+                    {heading: "AreaName", position: 11, common_type: nil, common_format: nil, unique_value_count: 6, empty_value_count: 0, sample_data: "Downtown\nNA\nNewNorthEnd\nOldNorthEnd\nSouthEnd\nUniversityHillSection\n", min_value: nil, max_value: nil},
+                    {heading: "Hour", position: 14, common_type: nil, common_format: nil, unique_value_count: 24, empty_value_count: 0, sample_data: "1 am\n1 pm\n10 am\n10 pm\n11 am\n11 pm\n12 am\n12 pm\n2 am\n2 pm\n", min_value: nil, max_value: nil},
+                    {heading: "DayOfWeek", position: 15, common_type: nil, common_format: nil, unique_value_count: 7, empty_value_count: 0, sample_data: "Friday\nMonday\nSaturday\nSunday\nThursday\nTuesday\nWednesday\n", min_value: nil, max_value: nil},
+                    {heading: "WARD", position: 16, common_type: nil, common_format: nil, unique_value_count: 9, empty_value_count: 0, sample_data: "1\n2\n3\n4\n5\n6\n7\n8\nNA\n", min_value: nil, max_value: nil},
+                    {heading: "DISTRICT", position: 17, common_type: nil, common_format: nil, unique_value_count: 5, empty_value_count: 0, sample_data: "Central\nEast\nNA\nNorth\nSouth\n", min_value: nil, max_value: nil},
+                    {heading: "Month", position: 19, common_type: nil, common_format: nil, unique_value_count: 2, empty_value_count: 0, sample_data: "February\nJanuary\n", min_value: nil, max_value: nil},
+                    {heading: "year", position: 20, common_type: nil, common_format: nil, unique_value_count: 1, empty_value_count: 0, sample_data: "2022\r\n", min_value: nil, max_value: nil},
+                    {heading: "priority", position: 18, common_type: "Priority", common_format: nil, unique_value_count: 4, empty_value_count: 0, sample_data: "NA\nPriority 1\nPriority 2\nPriority 3\n", min_value: "NA", max_value: "Priority 3"},
+                    {heading: "incident_number", position: 0, common_type: "Call Identifier", common_format: nil, unique_value_count: 2826, empty_value_count: 0, sample_data: "22BU000001\n22BU000002\n22BU000003\n22BU000004\n22BU000005\n22BU000006\n22BU000007\n22BU000008\n22BU000009\n22BU000010\n", min_value: "22BU000001", max_value: "22BU002841"},
+                    {heading: "call_type", position: 1, common_type: "Detailed Call Type", common_format: nil, unique_value_count: 82, empty_value_count: 0, sample_data: "911 Hangup\nAlarm\nAnimal Problem\nAnimals\nArrest on Warrant\nAssault - Aggravated\nAssault - Simple\nAssist - Agency\nAssist - K9\nAssist - Motorist\n", min_value: "911 Hangup", max_value: "Welfare Check"},
+                    {heading: "call_type_group", position: 2, common_type: "Call Category", common_format: nil, unique_value_count: 15, empty_value_count: 0, sample_data: "Administrative\nAnimal\nAssault\nAssist\nCourt Order\nDomestic\nDrugs\nFinancial Crime\nImpeding Police\nMotor Vehicle\n", min_value: "Administrative", max_value: "Quality of Life"},
+                    {heading: "call_time", position: 3, common_type: "Call Time", common_format: nil, unique_value_count: 2822, empty_value_count: 0, sample_data: "2021-12-31T19:45:28-05:00\n2021-12-31T20:08:55-05:00\n2021-12-31T20:31:00-05:00\n2021-12-31T20:31:30-05:00\n2021-12-31T20:57:56-05:00\n2021-12-31T21:00:06-05:00\n2021-12-31T21:18:45-05:00\n2021-12-31T21:25:52-05:00\n2021-12-31T21:29:02-05:00\n2021-12-31T21:42:01-05:00\n", min_value: "2021-12-31T19:45:28-05:00", max_value: "2022-02-28T16:23:54-05:00"},
+                    {heading: "call_origin", position: 5, common_type: "Emergency Category", common_format: nil, unique_value_count: 6, empty_value_count: 0, sample_data: "911\nIn Person\nNA\nOfficer/Radio\nOnline Report\nPhone\n", min_value: "911", max_value: "Phone"},
+                    {heading: "Latitude", position: 12, common_type: "Geolocation Latitude", common_format: nil, unique_value_count: 2563, empty_value_count: 0, sample_data: "44.1776405043013\n44.3785675833577\n44.4219970902467\n44.4321926404761\n44.4404631935981\n44.4410656789629\n44.4410782509977\n44.4454810902306\n44.4459239603799\n44.4462409915051\n", min_value: "44.1776405043013", max_value: "NA"},
+                    {heading: "Longitude", position: 13, common_type: "Geolocation Longitude", common_format: nil, unique_value_count: 2563, empty_value_count: 0, sample_data: "-72.8876163767331\n-72.9414267697611\n-73.1418808576068\n-73.154653009583\n-73.1546533199266\n-73.1546543563513\n-73.1546558827254\n-73.1546560449543\n-73.1546562442008\n-73.1546592544441\n", min_value: "-72.8876163767331", max_value: "NA"},
+                  ])
+
+b = ActiveStorage::Blob.create!(
+                                  {key: "hejk8e99340cc6wtdplrdtmkhb3u", filename: "police-incidents-2022.csv", content_type: "text/csv", metadata: {"identified"=>true, "analyzed"=>true}, service_name: "local", byte_size: 523743, checksum: "P9fzZHbl4EiW+my8Nif0yQ=="}
+                                )
+
+ActiveStorage::Attachment.create!(
+                                    {name: "files", record_type: "DataSet", record_id: ds.id, blob_id: b.id, row_count: 2826, headers: "incident_number,call_type,call_type_group,call_time,Street,call_origin,mental_health,drug_related,dv_related,alcohol_related,Area,AreaName,Latitude,Longitude,Hour,DayOfWeek,WARD,DISTRICT,priority,Month,year", start_date: nil, end_date: nil}
+                                  )
+
+UniqueValue.create!([
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "911", frequency: 51},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Welfare", frequency: 129},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Violation", frequency: 11},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Vandalism", frequency: 6},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Vandalism", frequency: 31},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "VIN", frequency: 6},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Untimely", frequency: 10},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Trespass", frequency: 95},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Traffic", frequency: 138},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Threats/Harassment", frequency: 85},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "TRO/FRO", frequency: 12},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "TRO/FRO", frequency: 53},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Suspicious", frequency: 214},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Suicide", frequency: 12},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Subpoena", frequency: 25},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Stolen", frequency: 19},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Sexual", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Search", frequency: 9},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Runaway", frequency: 10},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Robbery", frequency: 3},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Roadway", frequency: 22},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Retail", frequency: 32},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Recovered", frequency: 4},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Property", frequency: 16},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Parking", frequency: 36},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Overdose", frequency: 14},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Ordinance", frequency: 13},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Operations", frequency: 18},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Noise", frequency: 80},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "NA", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Motor", frequency: 25},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Missing", frequency: 8},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Mental", frequency: 142},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Lewd", frequency: 3},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Larceny", frequency: 54},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Larceny", frequency: 26},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Larceny", frequency: 9},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Juvenile", frequency: 23},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Intoxication", frequency: 47},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Impeding", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Illegal", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Identity", frequency: 7},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Fraud", frequency: 25},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Found/Lost", frequency: 94},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Foot", frequency: 10},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Fireworks", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "False", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "False", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Extortion", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Drugs", frequency: 3},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Drugs", frequency: 11},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Domestic", frequency: 83},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Domestic", frequency: 3},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Domestic", frequency: 5},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Disturbance", frequency: 83},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Disorderly", frequency: 14},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "DUI", frequency: 7},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "DLS", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Custodial", frequency: 6},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Cruelty", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Crash", frequency: 142},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Crash", frequency: 30},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Crash", frequency: 74},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Crash", frequency: 12},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Counterfeiting", frequency: 3},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Computer", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Compliance", frequency: 2},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Community", frequency: 38},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "CHINS", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Burglary", frequency: 38},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Background", frequency: 14},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assist", frequency: 157},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assist", frequency: 15},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assist", frequency: 43},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assist", frequency: 1},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assist", frequency: 135},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assault", frequency: 19},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Assault", frequency: 11},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Arrest", frequency: 26},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Animals", frequency: 25},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Animal", frequency: 44},
+                              {field: ds.fields.find_by(common_type: Classification::CALL_TYPE), value: "Alarm", frequency: 138},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Quality", frequency: 240},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Public", frequency: 990},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Property", frequency: 231},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Other", frequency: 234},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "NA", frequency: 70},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Motor", frequency: 493},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Impeding", frequency: 3},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Financial", frequency: 37},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Drugs", frequency: 28},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Domestic", frequency: 109},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Court", frequency: 126},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Assist", frequency: 151},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Assault", frequency: 38},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Animal", frequency: 44},
+                              {field: ds.fields.find_by(common_type: 'Call Category'), value: "Administrative", frequency: 32},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "911", frequency: 410},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "Phone", frequency: 2003},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "Online", frequency: 197},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "Officer/Radio", frequency: 177},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "NA", frequency: 11},
+                              {field: ds.fields.find_by(common_type: 'Emergency Category'), value: "In", frequency: 28},
+                              {field: ds.fields.find_by(common_type: 'Priority'), value: "Priority", frequency: 1295},
+                              {field: ds.fields.find_by(common_type: 'Priority'), value: "Priority", frequency: 1239},
+                              {field: ds.fields.find_by(common_type: 'Priority'), value: "Priority", frequency: 290},
+                              {field: ds.fields.find_by(common_type: 'Priority'), value: "NA", frequency: 2}
+                            ])
+
+
+CSV.foreach(Rails.root.join('db', 'import', 'apco_common_incident_types_2.103.2-2019.csv'), headers: true) do |line|
+  CommonIncidentType.create! code: line[0], description: line['description'], notes: line['notes']
+end

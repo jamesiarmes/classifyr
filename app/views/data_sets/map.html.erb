@@ -5,7 +5,7 @@
   } %>
 
   <br>
-  <%= render partial: 'shared/card_head', locals: {title: 'Map Data Fields', description: 'Now you can map specific fields from your uploaded data set to a set of common fields, more broadly applicable to call data from any Emergency Call Center.   Some of the fields include Emergency Category: a high level breakdown of 911 versus other types of emergencies, and Detailed Call Type: a more specific breakdown of the nature of the call for service.    You can also hover over the column headings to see sample data from that column.'} %>
+  <%= render partial: 'shared/card_head', locals: {title: 'Map Data Fields', description: "Now you can map specific fields from your uploaded data set to a set of common fields, more broadly applicable to call data from any Emergency Call Center.   Some of the fields include Emergency Category: a high level breakdown of 911 versus other types of emergencies, and #{Classification::CALL_TYPE}: a more specific breakdown of the nature of the call for service.    You can also hover over the column headings to see sample data from that column."} %>
 
   <div id="data_sets" class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
     <br>

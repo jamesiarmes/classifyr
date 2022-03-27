@@ -25,7 +25,7 @@ class DataSet < ApplicationRecord
   end
 
   def detailed_call_types
-    fields.find_by(common_type: 'Detailed Call Type').unique_values.order(:frequency)
+    fields.find_by(common_type: Classification::CALL_TYPE).unique_values.order(:frequency)
   end
 
   def priorities
@@ -60,7 +60,7 @@ class DataSet < ApplicationRecord
       # check there's an attached file
       datafile.headers.split(',').each_with_index do |heading, i|
         datafile.with_file do |f|
-          unique_value_count = `cut -d, -f#{i+1} #{f.path} | sort | uniq | wc -l`.to_i - 1
+          unique_value_count = `cut -d, -f#{i+1} #{f.path} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
           blank_value_count = `cut -d, -f#{i+1} #{f.path} | grep -v -e '[[:space:]]*$' | wc -l`
           sample_data = `tail -n +2 #{f.path} | cut -d, -f#{i+1} | sort | uniq | head`
           fields.create heading: heading, position: i, unique_value_count: unique_value_count,
@@ -89,7 +89,8 @@ class DataSet < ApplicationRecord
         field.max_value = `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
 
         if Field::VALUE_TYPES.include? field.common_type
-          `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort -rn | uniq -c`.split("\n").each do |line|
+          `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort -rn | uniq -c`.split("\n").each do |line|
+            # raise line.inspect
             x = line.strip.split
             field.unique_values.build value: x[1], frequency: x[0]
           end

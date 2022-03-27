@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_25_120925) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_27_210028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_120925) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "classifications", force: :cascade do |t|
+    t.bigint "common_incident_type_id"
+    t.string "common_type"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"
+  end
+
+  create_table "common_incident_types", force: :cascade do |t|
+    t.string "standard", default: "APCO"
+    t.string "version", default: "2.103.2-2019"
+    t.string "code"
+    t.string "description"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "data_sets", force: :cascade do |t|

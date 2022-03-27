@@ -5,7 +5,8 @@ Rails.application.routes.draw do
       get 'analyze'
     end
   end
-  root 'public#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  resources :classifications
+
+  root 'data_sets#index'
 end
