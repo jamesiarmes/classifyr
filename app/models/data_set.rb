@@ -1,6 +1,6 @@
 class DataSet < ApplicationRecord
-  has_many_attached :files
-  has_many :fields
+  has_many_attached :files, dependent: :destroy
+  has_many :fields, dependent: :destroy
 
   attr_accessor :step
 

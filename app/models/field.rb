@@ -1,6 +1,6 @@
 class Field < ApplicationRecord
-  has_many  :unique_values
   belongs_to  :data_set
+  has_many  :unique_values, dependent: :destroy
 
   TYPES = ['', 'Emergency Category', 'Call Category', Classification::CALL_TYPE,
            '-----------------', 'Call Identifier','Call Time', 'Call Disposition', 'Priority', 'Dispatched Unit Type',
