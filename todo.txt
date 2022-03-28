@@ -1,7 +1,10 @@
 TODO:
 + Fix duplicate "unique values" - splitting our all whitespace...
 + Comments on Data Sets (and on Classifications)
++ Cascading deletes on Data Sets, etc.
++ Clean up styles into css files
 
+- Fix the browser resizing issues
 - Required fields for data sets
 - Add Tags
 - Support for multiple files and ensuring same headings
