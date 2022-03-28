@@ -1,5 +1,11 @@
-import { Application } from '@hotwired/stimulus'
-import { Autocomplete } from 'stimulus-autocomplete'
+import { Controller } from "@hotwired/stimulus"
 
-const application = Application.start()
-application.register('autocomplete', Autocomplete)
+export default class extends Controller {
+    updateButton() {
+        if (this.element.checked == true) {
+            document.getElementById('map_button').innerText = "Mark Unknown";
+        } else {
+            document.getElementById('map_button').innerText = "Map Call Type";
+        }
+    }
+}

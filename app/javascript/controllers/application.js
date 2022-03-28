@@ -1,4 +1,5 @@
 import { Application } from "@hotwired/stimulus"
+import { Autocomplete } from 'stimulus-autocomplete'
 
 const application = Application.start()
 
@@ -16,5 +17,6 @@ application.register('tabs', Tabs)
 application.register('popover', Popover)
 application.register('toggle', Toggle)
 application.register('slideover', Slideover)
+application.register('autocomplete', Autocomplete)
 
 export { application }
