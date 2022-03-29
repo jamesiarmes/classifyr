@@ -7,7 +7,7 @@
   <br>
   <%= render partial: 'shared/card_head', locals: {title: 'Map Data Fields', description: "Now you can map specific fields from your uploaded data set to a set of common fields, more broadly applicable to call data from any Emergency Call Center.   Some of the fields include Emergency Category: a high level breakdown of 911 versus other types of emergencies, and #{Classification::CALL_TYPE}: a more specific breakdown of the nature of the call for service.    You can also hover over the column headings to see sample data from that column."} %>
 
-  <div id="data_sets" class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+  <div id="data_sets" class="header">
     <br>
 
     <%= form_with(model: @data_set, class: "contents") do |form| %>
@@ -20,34 +20,34 @@
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
-              <table class="min-w-full">
-                <thead class="bg-gray-50 border-b">
+              <table>
+                <thead>
                 <tr>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Column<br>Position</th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Column<br>Heading</th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Unique<br>Values</th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Blank<br>Values</th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Common<br>Type</th>
+                  <th scope="col" class="text-sm">Column<br>Position</th>
+                  <th scope="col" class="text-sm">Column<br>Heading</th>
+                  <th scope="col" class="text-sm">Unique<br>Values</th>
+                  <th scope="col" class="text-sm">Blank<br>Values</th>
+                  <th scope="col" class="text-sm">Common<br>Type</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <% @fields.each_with_index do |field, position| %>
-                  <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                  <tr>
+                    <td>
                       <%= position %>
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <td>
                       <%= link_to field.heading, '#', title: field.sample_data %>
 
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <td>
                       <%= field.unique_value_count %>
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <td>
                       <%= field.empty_value_count %>
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <td>
                       <%= form.select "common_types[#{position}]", options_for_select(Field::TYPES, field.common_type), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
                     </td>
                   </tr>
@@ -63,7 +63,7 @@
       <br>
 
       <div class="inline">
-        <%= form.submit value: 'Map Data Fields', class: "relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <%= form.submit value: 'Map Data Fields' %>
       </div>
     <% end %>
     <br>

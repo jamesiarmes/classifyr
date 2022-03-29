@@ -1,16 +1,16 @@
-<div class="mx-auto md:w-3/4 w-full">
+<div class="three-four">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="notice" id="notice"><%= notice %></p>
   <% end %>
 
   <%= render @data_set %>
 
   <br>
   <div class="inline-block ml-2">
-    <a href="<%= edit_data_set_path(@data_set) %>" type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit DataSet</a>
+    <a href="<%= edit_data_set_path(@data_set) %>" type="button" class="button">Edit DataSet</a>
   </div>
 
   <div class="inline-block ml-2">
-    <%= link_to 'List DataSets', data_sets_path, class: "bg-gray-100 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" %>
+    <%= link_to 'List Datasets', data_sets_path, class: "button-secondary" %>
   </div>
 </div>

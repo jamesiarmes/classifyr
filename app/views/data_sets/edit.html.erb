@@ -3,7 +3,7 @@
   <br>
   <%= render partial: 'shared/card_head', locals: {title: @data_set.title, description: 'Make updates to this existing dataset.  Note: file updates will be added shortly.'} %>
 
-  <div id="data_sets" class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+  <div id="data_sets" class="header">
   <%= render "form", data_set: @data_set %>
   <%= link_to 'Cancel', data_sets_path, class: "ml-2 bg-gray-100 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out" %>
   </div>

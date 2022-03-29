@@ -1,16 +1,16 @@
-<div class="mx-auto md:w-3/4 w-full">
+<div class="three-four">
   <%= render partial: 'data_set_steps', locals: {
     text: %w[text-indigo-600 text-gray-500 text-gray-500],
     borders: %w[border-indigo-600 border-gray-200 border-gray-200],
   } %>
 
   <br>
-  <%= render partial: 'shared/card_head', locals: {title: 'New DataSet', description: 'Detailed instructions on uploading data sets and what is expected in the process.'} %>
+  <%= render partial: 'shared/card_head', locals: {title: 'New Dataset', description: 'Detailed instructions on uploading data sets and what is expected in the process.'} %>
 
-  <div id="data_sets" class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+  <div id="data_sets" class="header">
     <%= render "form", data_set: @data_set %>
 
-    <%= link_to 'Cancel', data_sets_path, class: "ml-2 bg-gray-100 inline-block relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md active:shadow-lg transition duration-150 ease-in-out" %>
+    <%= link_to 'Cancel', data_sets_path, class: "button-secondary" %>
   </div>
 
 </div>

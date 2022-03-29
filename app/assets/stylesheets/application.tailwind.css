@@ -5,8 +5,99 @@
 
 
 @layer components {
-  input, textarea {
-    @apply placeholder-gray-400;
-  }
+    input, textarea {
+        @apply placeholder-gray-400;
+    }
+
+    input[type="text"], textarea, select {
+        @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+    }
+
+    input[type="file"] {
+        @apply block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full;
+    }
+
+    input[type="checkbox"] {
+        @apply focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded;
+    }
+
+    .jumbo {
+        @apply font-semibold text-3xl mb-5 text-indigo-600;
+    }
+
+    a.button, button.button, input[type="submit"] {
+        @apply relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+    }
+
+    a.button-secondary, button.button-secondary {
+        @apply ml-2 bg-gray-100 relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md active:shadow-lg transition duration-150 ease-in-out;
+    }
+
+    label {
+        @apply block text-sm font-medium text-gray-700;
+    }
+
+    table {
+        @apply min-w-full;
+    }
+
+    table thead {
+        @apply bg-gray-50 border-b;
+    }
+
+    table th {
+        @apply font-medium text-gray-900 px-3 py-2 text-left;
+    }
+
+    table tr {
+        @apply bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100;
+    }
+    table tr td {
+        @apply text-xs text-gray-900 font-light px-3 py-2 whitespace-nowrap;
+    }
+
+    h3 {
+        @apply text-lg leading-6 font-medium text-gray-900;
+    }
+
+    p.description {
+        @apply mt-1 text-sm text-gray-500;
+    }
+
+    .header {
+        @apply bg-white px-4 py-5 border-b border-gray-200 sm:px-6;
+    }
+
+    .header-with-button {
+        @apply -ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap;
+    }
+
+    .errors {
+        @apply bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3;
+    }
+    p.notice {
+        @apply py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block;
+    }
+
+    .three-four {
+        @apply mx-auto md:w-3/4 w-full;
+    }
+
+    ul.autocomplete {
+        @apply ml-6 list-group absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm max-w-4xl;
+    }
+
+    ul.autocomplete li {
+        @apply list-group-item relative hover:bg-indigo-600 hover:text-white z-50 cursor-pointer py-2 pl-3 pr-9 text-gray-900;
+    }
+
+    dl dt {
+        @apply text-sm font-medium text-gray-500;
+    }
+
+    a {
+        @apply font-medium text-indigo-600 hover:text-indigo-500;
+    }
+
 }
 
