@@ -83,21 +83,8 @@
         @apply mx-auto md:w-3/4 w-full;
     }
 
-    ul.autocomplete {
-        @apply ml-6 list-group absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm max-w-4xl;
-    }
-
-    ul.autocomplete li {
-        @apply list-group-item relative hover:bg-indigo-600 hover:text-white z-50 cursor-pointer py-2 pl-3 pr-9 text-gray-900;
-    }
-
     dl dt {
         @apply text-sm font-medium text-gray-500;
     }
-
-    a {
-        @apply font-medium text-indigo-600 hover:text-indigo-500;
-    }
-
 }
 

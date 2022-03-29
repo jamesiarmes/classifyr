@@ -50,7 +50,7 @@
         </div>
         <input type="text" data-autocomplete-target="input" class="ml-6 rounded-md border border-white bg-white py-2 pl-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm max-w-4xl" role="combobox" aria-controls="options" aria-expanded="false" style="width: 700px" placeholder="Search Common Incident Types for <%= @term.value %>"/>
         <input type="hidden" name="search_term" data-autocomplete-target="hidden"/>
-        <ul class="autocomplete" data-autocomplete-target="results" style="width: 700px">
+        <ul class="ml-6 list-group absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm max-w-4xl" data-autocomplete-target="results" style="width: 700px">
         </ul>
       </div>
 
