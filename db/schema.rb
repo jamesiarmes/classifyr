@@ -48,8 +48,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_27_210028) do
 
   create_table "classifications", force: :cascade do |t|
     t.bigint "common_incident_type_id"
+    t.integer "user_id"
     t.string "common_type"
     t.string "value"
+    t.boolean "unknown", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"

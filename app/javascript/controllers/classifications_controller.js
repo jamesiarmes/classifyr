@@ -8,4 +8,8 @@ export default class extends Controller {
             document.getElementById('map_button').innerText = "Map Call Type";
         }
     }
+
+    submit() {
+        document.getElementById('class_form').submit();
+    }
 }
