@@ -90,8 +90,7 @@ class DataSet < ApplicationRecord
 
         if Field::VALUE_TYPES.include? field.common_type
           `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort -rn | uniq -c`.split("\n").each do |line|
-            # raise line.inspect
-            x = line.strip.split
+            x = line.strip.split("\s", 2)
             field.unique_values.build value: x[1], frequency: x[0]
           end
         end
