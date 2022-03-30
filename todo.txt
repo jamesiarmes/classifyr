@@ -1,10 +1,9 @@
 TODO:
-+ Dashboard with tabs to show classifications
-+ Highlighted current tab
-+ Export crosswalk
-+ Export multiple data sets with "common type" columns and mappings
 + Comments on Data Sets (and on Classifications)
 
+- Export crosswalk
+- Export multiple data sets with "common type" columns and mappings
+- Highlighted current selected side nav
 - Add additional categories for a type
 - Require file upload or handle empty datasets
 - Fix the browser resizing issues
@@ -21,6 +20,6 @@ TODO:
 - Classification - multiple people classifying the data
 - Categorizer - show "similar" detailed call types using pg_tgrm (trigrams) extension
 - APCO - different display labels (and full descriptions)
-- Rate your certainty???
 - Also choose the call categories (and emergency type/origin?) this applies to???
-? Map multiple fields to ...
+- Map multiple fields from a data set to a single common incident type?
+- Each call type should be reviewed 2 (3?) times

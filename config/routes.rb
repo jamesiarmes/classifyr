@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :classifications
+  resources :dashboards
 
-  root 'data_sets#index'
+  root 'dashboards#index'
 end
