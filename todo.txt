@@ -1,4 +1,5 @@
 TODO:
++ README
 + Comments on Data Sets (and on Classifications)
 
 - Export crosswalk
@@ -23,3 +24,4 @@ TODO:
 - Also choose the call categories (and emergency type/origin?) this applies to???
 - Map multiple fields from a data set to a single common incident type?
 - Each call type should be reviewed 2 (3?) times
+- How do we rerun the ETL when we come up with new mappings, etc.
