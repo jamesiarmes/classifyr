@@ -3,30 +3,9 @@ require "rails_helper"
 RSpec.describe Field, type: :model do
   let(:field) { build(:field) }
 
-  describe "factory" do
-    it "has a valid factory" do
-      expect(field).to be_valid
-    end
-  end
-
-  describe "versioning" do
-    it "has versioning enabled on create" do
-      field = create(:field)
-      field.update(position: 1)
-      expect(field.versions.count).to eq(2)
-      expect(field.versions.last.object_changes).to include("position")
-    end
-  end
-
-  describe "associations" do
-    it "belongs_to a data_set" do
-      expect(field).to respond_to(:data_set)
-    end
-
-    it "has_many unique_values" do
-      expect(field).to respond_to(:unique_values)
-    end
-  end
+  include_examples "valid factory", :field
+  include_examples "papertrail versioning", :field, "position"
+  include_examples "associations", :field, [:data_set, :unique_values]
 
   describe "constants" do
     it "has the TYPES constant defined" do
