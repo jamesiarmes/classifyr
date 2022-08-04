@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   resources :classifications
-  resources :dashboards
+  resources :dashboards, only: [:index, :show]
 
   root "dashboards#index"
 end
