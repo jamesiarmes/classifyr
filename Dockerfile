@@ -9,6 +9,11 @@ RUN apt-get update -q && \
 WORKDIR /opt/classifyr
 COPY . /opt/classifyr
 RUN bundle install
+RUN rails assets:precompile
+
+# Remove lock file from installed dependencies. Bundler doesn't use them but they
+# can be flagged by scanning services such as AWS Inspector.
+RUN find /usr/local/bundle -name Gemfile.lock -delete
 
 # Add a script to be executed every time the container starts.
 COPY scripts/entrypoint.sh /usr/bin/
