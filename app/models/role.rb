@@ -62,18 +62,11 @@ class Role < ApplicationRecord
     find_by(name: DEFAULT_ROLE_NAME)
   end
 
-  def humanized_name
-    name.humanize.titleize
+  def to_s
+    humanized_name
   end
 
-  def authorized?(action, entity)
-    permissions = ROLE_PERMISSIONS[name.to_sym]
-
-    return false unless permissions
-    return true if permissions[:all]
-    return false unless permissions[entity]
-    return true if permissions[entity]&.include?(:all)
-
-    permissions[entity].include?(action)
+  def humanized_name
+    name.humanize.titleize
   end
 end

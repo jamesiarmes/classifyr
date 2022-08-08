@@ -57,5 +57,14 @@ module ApplicationHelper
       %w[Wyoming WY],
     ]
   end
+
+  def authorized?(action, entity, record = nil)
+    Authorizer.new(
+      user: current_user,
+      action:,
+      entity:,
+      record:,
+    ).run
+  end
 end
 # rubocop:enable Metrics/MethodLength
