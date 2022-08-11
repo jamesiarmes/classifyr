@@ -13,14 +13,14 @@ phases:
     commands:
       - echo "Build starting on $(date)"
       - echo "Building the container image"
-      - docker build -t $REPOSITORY_URI:$TAG
+      - docker build -t $REPOSITORY_URL:$TAG .
   post_build:
     commands:
       - echo "Build completed on $(date)"
       - echo "Pushing the container image"
       - docker push $REPOSITORY_URL:$TAG
       - echo "Writing image definitions file"
-      - printf '[{"name":"web","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+      - printf '[{"name":"web","imageUri":"%s"}]' $REPOSITORY_URL:$TAG > imagedefinitions.json
 
 # This file is used by CodeDeploy.
 artifacts:
