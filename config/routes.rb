@@ -30,7 +30,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :classifications
+  resources :classifications, only: [:index] do
+    collection do
+      get "/call_types/data_sets/:data_set_id/classify",
+          to: "classifications/call_types#classify",
+          as: :classify_data_sets_call_types
+      get :call_types
+    end
+  end
+
   resources :users, only: [:index, :edit, :update, :destroy]
   resources :dashboards, only: [:index, :show]
 

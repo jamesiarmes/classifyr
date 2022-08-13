@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
+  before_action :set_default_breadcrumbs
   after_action :verify_authorized
 
   layout :layout_by_resource
@@ -18,6 +19,24 @@ class ApplicationController < ActionController::Base
       entity:,
       record:,
     ).run
+  end
+
+  def set_default_breadcrumbs
+    return if controller_name == "registrations"
+
+    @default_breadcrumbs = [{
+      name: controller_name.humanize,
+      path: request.path,
+    }]
+  end
+
+  def add_breadcrumb(name, path = nil)
+    @breadcrumbs ||= []
+    @breadcrumbs << { name:, path: }
+  end
+
+  def disable_turbo
+    @disable_turbo = true
   end
 
   private

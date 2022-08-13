@@ -1,22 +1,26 @@
 class DataSetsController < ApplicationController
   before_action :set_data_set, only: %i[show edit update destroy map analyze]
+  before_action :set_breadcrumbs
 
   def index
     authorize! :index, :data_sets
-    @data_sets = DataSet.all
+    @data_sets = DataSet.ordered
   end
 
   def show
     authorize! :show, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
   end
 
   def new
     authorize! :create, :data_sets
     @data_set = DataSet.new
+    add_breadcrumb("Create a new dataset", nil)
   end
 
   def edit
     authorize! :update, :data_sets
+    add_breadcrumb("Edit #{@data_set.title}", edit_data_set_path(@data_set))
   end
 
   def create
@@ -54,12 +58,18 @@ class DataSetsController < ApplicationController
 
   def map
     authorize! :create, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
+    add_breadcrumb("Map Data Fields", nil)
+
     @data_set.prepare_datamap
     @fields = @data_set.fields.order("position asc")
   end
 
   def analyze
     authorize! :create, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
+    add_breadcrumb("Analyze", nil)
+
     @data_set.analyze! unless @data_set.analyzed?
   end
 
@@ -77,5 +87,9 @@ class DataSetsController < ApplicationController
       :documentation_link, :city, :state, :description, :has_911, :has_ems,
       :has_fire, files: []
     )
+  end
+
+  def set_breadcrumbs
+    add_breadcrumb("Datasets", data_sets_path)
   end
 end

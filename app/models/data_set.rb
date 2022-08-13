@@ -9,6 +9,8 @@ class DataSet < ApplicationRecord
 
   attr_accessor :step
 
+  scope :ordered, -> { order(created_at: :desc) }
+
   def storage_size
     files.sum(&:byte_size)
   end
@@ -57,6 +59,10 @@ class DataSet < ApplicationRecord
     else
       "#{start_time.to_date.to_fs(:short_date)} - #{end_time.to_date.to_fs(:short_date)}"
     end
+  end
+
+  def pick_random_field(type = Classification::CALL_TYPE)
+    fields.where(common_type: type).order(Arel.sql("RANDOM()")).first
   end
 
   def prepare_datamap
