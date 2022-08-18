@@ -7,7 +7,7 @@
       <div class="text-black pb-8">
         Please review the sample call records for this call type. From there, please classify the call type to the best of your ability by searching below for different common incident types. After you've selected an incident type, you can choose how confident you are about your selection. If you are unable to identify a common incident type to map to this call type, you can choose to skip this call type classification.
       </div>
-      <section class="bg-white">
+      <section id="call-types-examples" class="bg-white mb-16">
         <div class="text-lg font-bold text-black px-6 py-6 border-b-2 border-gray-200">
           Example Call Type Records
         </div>
@@ -37,6 +37,25 @@
             </table>
           </div>
         </section>
+      </section>
+      <section id="classify-call-type">
+        <div class="text-3xl font-bold text-black pb-4">Classify Call Type</div>
+        <div class="text-black pb-8">
+          Assign a common incident type to this data set.
+        </div>
+        <div class="mb-10">
+          <div class="relative text-gray-400 focus-within:text-gray-400">
+            <%= render 'shared/common_incident_types/search_bar' %>
+          </div>
+        </div>
+      </section>
+      <div class="min-h-[320px]" data-controller="classify">
+        <%= turbo_frame_tag "results" do %>
+          <%= render 'shared/common_incident_types/results',
+              common_incident_types: @common_incident_types %>
+        <% end %>
+        <%= render "classifications/call_types/selected_common_incident_type" %>
       </div>
     </div>
   </div>
+</div>

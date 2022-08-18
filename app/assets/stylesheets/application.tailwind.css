@@ -12,6 +12,18 @@
         sm:text-sm border-gray-300 rounded-md;
     }
 
+    input.rounded-input, input.disabled-rounded-input {
+        @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full
+               sm:text-sm border-gray-300 border-0 w-full bg-white pl-12
+               py-4 focus:shadow focus:outline-none focus:bg-white border-transparent
+               text-gray-600 focus:border-transparent focus:ring-0 focus:text-gray-900
+               rounded-3xl;
+    }
+
+    input.disabled-rounded-input {
+        @apply bg-zinc-100;
+    }
+
     input[type="file"] {
         @apply block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full;
     }
@@ -24,12 +36,32 @@
         @apply font-semibold text-3xl mb-5 text-indigo-600;
     }
 
-    a.button, button.button, input[type="submit"] {
-        @apply relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer;
+    .button, input[type="submit"] {
+        @apply relative inline-flex items-center px-6 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer;
     }
 
     a.button-secondary, button.button-secondary {
         @apply bg-gray-200 relative inline-flex justify-center px-4 py-2 border border-slate-300 hover:bg-gray-300 shadow-sm text-sm font-medium rounded-md active:shadow-lg transition duration-150 ease-in-out cursor-pointer;
+    }
+
+    .button-orange {
+        @apply relative inline-flex items-center px-6 py-2 border border-transparent
+               shadow-sm text-base font-medium rounded-md text-white bg-orange-500
+               hover:bg-orange-700 cursor-pointer;
+    }
+
+    .button-white {
+        @apply relative inline-flex items-center px-6 py-2 border border-transparent
+               shadow-sm text-base font-medium rounded-md text-gray-500 bg-white
+               hover:bg-zinc-200 cursor-pointer;
+    }
+
+    .button-selected {
+        @apply bg-green-700 hover:bg-green-900;
+    }
+
+    .button-deselect {
+        @apply bg-red-500 hover:bg-red-700;
     }
 
     a.button-cancel, button.button-cancel {
@@ -88,8 +120,16 @@
         @apply py-2 px-3 bg-green-50 text-green-500 font-medium text-center;
     }
 
+    p.notice-border {
+        @apply py-2 px-3 bg-green-50 text-green-500 font-medium text-center border-2 border-green-500;
+    }
+
     p.alert {
         @apply py-2 px-3 bg-orange-50 text-orange-500 font-medium text-center;
+    }
+
+    p.alert-border {
+        @apply py-2 px-3 bg-orange-50 text-orange-500 font-medium text-center border-2 border-orange-500;
     }
 
     .three-four {
@@ -114,6 +154,13 @@
 
     .nav-icon {
         @apply text-gray-400 mr-3 flex-shrink-0 h-6 w-6;
+    }
+
+    .line-clamp-2 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
 }
 
