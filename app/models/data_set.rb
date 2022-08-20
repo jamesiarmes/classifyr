@@ -10,6 +10,23 @@ class DataSet < ApplicationRecord
   attr_accessor :step
 
   scope :ordered, -> { order(created_at: :desc) }
+  scope :to_classify, lambda {
+    joins(:fields)
+      .where(fields: { common_type: Classification::CALL_TYPE })
+      .order(completion_percent: :asc, created_at: :asc)
+  }
+
+  def call_type_field
+    fields.where(common_type: Classification::CALL_TYPE).first
+  end
+
+  def pick_value_to_classify_for(user)
+    call_type_field&.pick_value_to_classify_for(user)
+  end
+
+  def completed?
+    completion_percent == 100
+  end
 
   def storage_size
     files.sum(&:byte_size)
@@ -61,10 +78,6 @@ class DataSet < ApplicationRecord
     end
   end
 
-  def pick_random_field(type = Classification::CALL_TYPE)
-    fields.where(common_type: type).order(Arel.sql("RANDOM()")).first
-  end
-
   def prepare_datamap
     return unless fields.empty?
 
@@ -111,6 +124,14 @@ class DataSet < ApplicationRecord
     end
 
     update_attribute :analyzed, true
+    reload.update_completion
   end
   # rubocop:enable all
+
+  def update_completion
+    results = DataSets::Completion.new(self).calculate
+    return true unless results
+
+    update(results)
+  end
 end
