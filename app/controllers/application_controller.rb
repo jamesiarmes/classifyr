@@ -39,6 +39,23 @@ class ApplicationController < ActionController::Base
     @disable_turbo = true
   end
 
+  def find_by_slug_with_history(klass, slug)
+    resource = klass.find_by(slug:)
+    redirect_if_previous_slug(klass, slug) unless resource
+
+    resource
+  end
+
+  def redirect_if_previous_slug(klass, slug)
+    slug_record = FriendlyId::Slug.find_by(sluggable_type: klass.to_s, slug:)
+
+    unless slug_record
+      raise ActiveRecord::RecordNotFound, "can't find record with slug: \"#{slug}\""
+    end
+
+    redirect_to slug_record.sluggable, status: :moved_permanently
+  end
+
   private
 
   def not_authorized

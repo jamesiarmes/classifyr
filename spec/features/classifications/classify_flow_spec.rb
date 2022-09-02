@@ -39,11 +39,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     find("#sidenav").click_on "Classification"
     check_data_set_card(data_set, percent, completion)
 
-    find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.id}/classify']", match: :first).click
+    find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.slug}/classify']", match: :first).click
   end
 
   def check_data_set_card(data_set, percent, completion)
-    data_set_card = find("[data-data-set-id='#{data_set.id}']")
+    data_set_card = find("[data-data-set-slug='#{data_set.slug}']")
 
     expect(data_set_card).to have_content(data_set.title)
     expect(data_set_card).to have_content("#{percent}%")
@@ -111,7 +111,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
 
   context "when a user has classified all call types for a data set" do
     context "when there are no other data sets" do
-      it "redirects to the data sets page and show a notice" do
+      it "redirects to the data sets page and shows a notice" do
         # Ensure all unique values have all been classified by jack
         create(:classification, unique_value: unique_value_1_1, user: jack)
         create(:classification, unique_value: unique_value_1_2, user: jack)
@@ -129,12 +129,12 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
         expect(page).to have_current_path("/classifications/call_types")
-        expect(page).to have_content("All current data sets have been fully classified, thank you!")
+        expect(page).to have_content("You have already classified all call types for this data set.")
       end
     end
 
     context "when there are more data sets to classify" do
-      it "continues to the following data set" do
+      it "redirects to the data sets page and shows a notice" do
         # Ensure all unique values have all been classified by jack
         create(:classification, unique_value: unique_value_1_1, user: jack)
         create(:classification, unique_value: unique_value_1_2, user: jack)
@@ -153,9 +153,8 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         click_on "Classify Another Call Type"
         expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
-        expect(page).to have_current_path("/classifications/call_types/data_sets/#{data_set_2.id}/classify")
-        expect(page).to have_content(data_set_2.title)
-        expect(page).to have_content(unique_value_2_1.value)
+        expect(page).to have_current_path("/classifications/call_types")
+        expect(page).to have_content("You have already classified all call types for this data set.")
       end
     end
   end

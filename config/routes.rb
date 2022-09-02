@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   mount HealthMonitor::Engine, at: "/"
 
-  resources :data_sets do
+  resources :data_sets, param: :slug do
     member do
       get "map"
       get "analyze"
@@ -29,19 +29,23 @@ Rails.application.routes.draw do
 
   resources :classifications, only: [:index] do
     collection do
-      get "/call_types/data_sets/:data_set_id/classify",
+      get "/call_types/data_sets/:data_set_slug/classify",
           to: "classifications/call_types#index",
           as: :classify_data_sets_call_types
 
-      post "/call_types/data_sets/:data_set_id/classify",
+      get "/call_types/:slug",
+          to: "classifications/call_types#show",
+          as: :classify_call_type
+
+      post "/call_types/:slug",
            to: "classifications/call_types#create",
-           as: :data_sets_call_types
+           as: :create_call_types
 
       get :call_types
     end
   end
 
-  resources :users, only: [:index, :edit, :update, :destroy]
+  resources :users, param: :slug, only: [:index, :edit, :update, :destroy]
   resources :dashboards, only: [:index, :show]
 
   root "dashboards#index"

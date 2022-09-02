@@ -25,6 +25,7 @@ gem "aws-sdk-s3", "~> 1.114"
 gem "pg_search", "~> 2.3"
 gem "chronic", "~> 0.10.2"
 gem "csv", "~> 3.2.0"
+gem "friendly_id", "~> 5.4.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
