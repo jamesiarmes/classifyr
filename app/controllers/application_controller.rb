@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_breadcrumbs
-    return if controller_name == "registrations"
+    return if controller_name == 'registrations'
 
     @default_breadcrumbs = [{
       name: controller_name.humanize,
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
   private
 
   def not_authorized
-    redirect_to dashboards_path, alert: "You are not authorized to access this page."
+    redirect_to dashboards_path, alert: 'You are not authorized to access this page.'
   end
 
   def verify_authorized
@@ -77,13 +77,13 @@ class ApplicationController < ActionController::Base
   # Use logged-in layout when editing current_user details
   def layout_by_resource
     if devise_controller? && defined?(resource_name) && !my_profile?
-      "devise"
+      'devise'
     else
-      "application"
+      'application'
     end
   end
 
   def my_profile?
-    controller_name == "registrations" && %w[edit update].include?(action_name)
+    controller_name == 'registrations' && %w[edit update].include?(action_name)
   end
 end

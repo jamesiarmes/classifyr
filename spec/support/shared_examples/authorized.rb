@@ -1,6 +1,6 @@
-RSpec.shared_examples "authorized" do |method, role, status|
-  context "when authorized" do
-    it "returns 200" do
+RSpec.shared_examples 'authorized' do |method, role, status|
+  context 'when authorized' do
+    it 'returns 200' do
       role = create(:role, name: role)
       user = create(:user, role:)
       sign_in user
@@ -14,7 +14,7 @@ RSpec.shared_examples "authorized" do |method, role, status|
 
       expect(response).to have_http_status(status || :ok)
       expect(response.body).not_to include(
-        "You are being <a href=\"http://www.example.com/dashboards\">redirected</a>.",
+        'You are being <a href="http://www.example.com/dashboards">redirected</a>.',
       )
     end
   end

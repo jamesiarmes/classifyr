@@ -15,7 +15,7 @@ class UniqueValue < ApplicationRecord
 
   scope :to_classify_with_data_set_priority, lambda { |user|
     joins(:data_set)
-      .order("data_sets.completion_percent ASC, unique_values.classifications_count ASC")
+      .order('data_sets.completion_percent ASC, unique_values.classifications_count ASC')
       .call_types.not_completed.not_classified_by(user)
   }
   scope :to_classify, lambda { |user|
@@ -23,7 +23,7 @@ class UniqueValue < ApplicationRecord
   }
   scope :call_types, -> { joins(:field).where(field: { common_type: Classification::CALL_TYPE }) }
   scope :ordered_by_completion, -> { order(frequency: :desc, classifications_count: :asc) }
-  scope :not_completed, -> { where("classifications_count < ?", COMPLETION_COUNT) }
+  scope :not_completed, -> { where('classifications_count < ?', COMPLETION_COUNT) }
   scope :classified_by, lambda { |user|
     left_joins(:classifications).where(classifications: { user_id: user.id })
   }

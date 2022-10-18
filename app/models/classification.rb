@@ -1,10 +1,10 @@
 class Classification < ApplicationRecord
   has_paper_trail
 
-  CALL_TYPE = "Detailed Call Type".freeze
-  LOW_CONFIDENCE = "Low Confidence".freeze
-  SOMEWHAT_CONFIDENT = "Somewhat Confident".freeze
-  VERY_CONFIDENT = "Very Confident".freeze
+  CALL_TYPE = 'Detailed Call Type'.freeze
+  LOW_CONFIDENCE = 'Low Confidence'.freeze
+  SOMEWHAT_CONFIDENT = 'Somewhat Confident'.freeze
+  VERY_CONFIDENT = 'Very Confident'.freeze
 
   belongs_to :common_incident_type, optional: true
   belongs_to :user, optional: true

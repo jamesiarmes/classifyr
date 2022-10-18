@@ -1,33 +1,33 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "CallTypes", type: :request do
+RSpec.describe 'CallTypes', type: :request do
   let(:user) { create(:user) }
   let(:data_set) { create(:data_set) }
   let(:common_incident_type) { create(:common_incident_type) }
   let!(:field) { create(:field, data_set:, common_type: Classification::CALL_TYPE) }
   let!(:unique_value) { create(:unique_value, field:) }
 
-  describe "#index" do
+  describe '#index' do
     let(:path) { "/classifications/call_types/data_sets/#{data_set.slug}/classify" }
 
-    include_examples "unauthenticated", :get
+    include_examples 'unauthenticated', :get
 
-    context "when authenticated" do
-      include_examples "unauthorized", :get, :data_consumer
-      include_examples "unauthorized", :get, :data_reviewer
-      include_examples "unauthorized", :get, :volunteer
-      include_examples "unauthorized", :get, :data_importer
+    context 'when authenticated' do
+      include_examples 'unauthorized', :get, :data_consumer
+      include_examples 'unauthorized', :get, :data_reviewer
+      include_examples 'unauthorized', :get, :volunteer
+      include_examples 'unauthorized', :get, :data_importer
 
-      include_examples "authorized", :get, :data_admin, :found
-      include_examples "authorized", :get, :data_classifier, :found
+      include_examples 'authorized', :get, :data_admin, :found
+      include_examples 'authorized', :get, :data_classifier, :found
 
-      context "when authorized" do
+      context 'when authorized' do
         let(:role) { create(:role, name: :data_admin) }
         let(:user) { create(:user, role:) }
 
         before { sign_in user }
 
-        it "shows the classification page" do
+        it 'shows the classification page' do
           get(path)
 
           expect(response.body).to include(data_set.title)
@@ -37,27 +37,27 @@ RSpec.describe "CallTypes", type: :request do
     end
   end
 
-  describe "#show" do
+  describe '#show' do
     let(:path) { "/classifications/call_types/#{unique_value.slug}" }
 
-    include_examples "unauthenticated", :get
+    include_examples 'unauthenticated', :get
 
-    context "when authenticated" do
-      include_examples "unauthorized", :get, :data_consumer
-      include_examples "unauthorized", :get, :data_reviewer
-      include_examples "unauthorized", :get, :volunteer
-      include_examples "unauthorized", :get, :data_importer
+    context 'when authenticated' do
+      include_examples 'unauthorized', :get, :data_consumer
+      include_examples 'unauthorized', :get, :data_reviewer
+      include_examples 'unauthorized', :get, :volunteer
+      include_examples 'unauthorized', :get, :data_importer
 
-      include_examples "authorized", :get, :data_admin
-      include_examples "authorized", :get, :data_classifier
+      include_examples 'authorized', :get, :data_admin
+      include_examples 'authorized', :get, :data_classifier
 
-      context "when authorized" do
+      context 'when authorized' do
         let(:role) { create(:role, name: :data_admin) }
         let(:user) { create(:user, role:) }
 
         before { sign_in user }
 
-        it "shows the classification page" do
+        it 'shows the classification page' do
           get(path)
 
           expect(response.body).to include(data_set.title)
@@ -67,7 +67,7 @@ RSpec.describe "CallTypes", type: :request do
     end
   end
 
-  describe "#create" do
+  describe '#create' do
     let(:path) { "/classifications/call_types/#{unique_value.slug}" }
     let(:valid_params) do
       {
@@ -80,25 +80,25 @@ RSpec.describe "CallTypes", type: :request do
       }
     end
 
-    include_examples "unauthenticated", :post
+    include_examples 'unauthenticated', :post
 
-    context "when authenticated" do
-      include_examples "unauthorized", :post, :data_consumer
-      include_examples "unauthorized", :post, :data_reviewer
-      include_examples "unauthorized", :post, :volunteer
-      include_examples "unauthorized", :post, :data_importer
+    context 'when authenticated' do
+      include_examples 'unauthorized', :post, :data_consumer
+      include_examples 'unauthorized', :post, :data_reviewer
+      include_examples 'unauthorized', :post, :volunteer
+      include_examples 'unauthorized', :post, :data_importer
 
-      include_examples "authorized", :post, :data_admin
-      include_examples "authorized", :post, :data_classifier
+      include_examples 'authorized', :post, :data_admin
+      include_examples 'authorized', :post, :data_classifier
 
-      context "when authorized" do
+      context 'when authorized' do
         let(:role) { create(:role, name: :data_admin) }
         let(:user) { create(:user, role:) }
 
         before { sign_in user }
 
-        context "with invalid params" do
-          it "returns an error" do
+        context 'with invalid params' do
+          it 'returns an error' do
             post path, params: {
               classification: {
                 value: unique_value.value,
@@ -106,12 +106,12 @@ RSpec.describe "CallTypes", type: :request do
             }
 
             expect(Classification.count).to eq(0)
-            expect(response.body).to include("Something went wrong")
+            expect(response.body).to include('Something went wrong')
           end
         end
 
-        context "with valid params" do
-          it "creates a classification" do
+        context 'with valid params' do
+          it 'creates a classification' do
             post path, params: valid_params
 
             expect(response).to have_http_status(:ok)

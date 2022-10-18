@@ -12,7 +12,7 @@ class Classifications::CallTypesController < ApplicationController
 
     unless @call_type
       redirect_to call_types_classifications_path,
-                  notice: "You have already classified all call types for this data set."
+                  notice: 'You have already classified all call types for this data set.'
       return
     end
 
@@ -58,7 +58,7 @@ class Classifications::CallTypesController < ApplicationController
     return unless @data_set.completed?
 
     redirect_to call_types_classifications_path,
-                notice: "This data set has already been fully classified."
+                notice: 'This data set has already been fully classified.'
   end
 
   def set_call_type
@@ -67,15 +67,15 @@ class Classifications::CallTypesController < ApplicationController
 
   def go_to_next_call_type
     redirect_to call_types_classifications_path,
-                notice: "You have already classified all call types for this data set."
+                notice: 'You have already classified all call types for this data set.'
   end
 
   def set_breadcrumbs
-    add_breadcrumb("Classification", call_types_classifications_path)
+    add_breadcrumb('Classification', call_types_classifications_path)
   end
 
   def set_show_breacrumbs
-    add_breadcrumb("Call Types", call_types_classifications_path)
+    add_breadcrumb('Call Types', call_types_classifications_path)
     add_breadcrumb(@call_type.data_set.title)
   end
 end

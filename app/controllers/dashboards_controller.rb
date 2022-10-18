@@ -12,6 +12,6 @@ class DashboardsController < ApplicationController
   private
 
   def set_breadcrumbs
-    add_breadcrumb("Dashboard", dashboards_path)
+    add_breadcrumb('Dashboard', dashboards_path)
   end
 end

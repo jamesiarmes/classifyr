@@ -6,17 +6,17 @@ class Field < ApplicationRecord
   has_many :classifications, through: :unique_values
 
   TYPES = [
-    "", "Emergency Category", "Call Category", Classification::CALL_TYPE,
-    "-----------------", "Call Identifier", "Call Time", "Call Disposition", "Priority", "Dispatched Unit Type",
-    "-----------------", "Geolocation Latitude", "Geolocation Longitude",
-    "-----------------", "Flag Alcohol Related", "Flag Domestic Violence", "Flag Drug Related", "Flag Mental Health"
+    '', 'Emergency Category', 'Call Category', Classification::CALL_TYPE,
+    '-----------------', 'Call Identifier', 'Call Time', 'Call Disposition', 'Priority', 'Dispatched Unit Type',
+    '-----------------', 'Geolocation Latitude', 'Geolocation Longitude',
+    '-----------------', 'Flag Alcohol Related', 'Flag Domestic Violence', 'Flag Drug Related', 'Flag Mental Health'
   ].freeze
 
   # FORMATS = ['', 'Lookup', 'Date', 'Time', 'Address', 'Geolocation', 'Text']
   #
 
-  VALUE_TYPES = ["Emergency Category", "Call Category", Classification::CALL_TYPE, "Call Disposition",
-                 "Priority"].freeze
+  VALUE_TYPES = ['Emergency Category', 'Call Category', Classification::CALL_TYPE, 'Call Disposition',
+                 'Priority'].freeze
 
   scope :classified, -> { joins(:classifications).distinct }
   scope :not_classified, -> { where.missing(:classifications).distinct }

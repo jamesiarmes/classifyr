@@ -1,4 +1,4 @@
-require "csv"
+require 'csv'
 
 class CommonIncidentType < ApplicationRecord
   include PgSearch::Model
@@ -10,7 +10,7 @@ class CommonIncidentType < ApplicationRecord
                   ],
                   using: {
                     tsearch: {
-                      dictionary: "english",
+                      dictionary: 'english',
                       prefix: true,
                     },
                     trigram: {
@@ -24,7 +24,7 @@ class CommonIncidentType < ApplicationRecord
 
   has_many :classifications, dependent: :destroy
 
-  scope :apco, -> { where(standard: "APCO") }
+  scope :apco, -> { where(standard: 'APCO') }
 
   def formatted_code
     humanized_code || code

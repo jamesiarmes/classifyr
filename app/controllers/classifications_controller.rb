@@ -8,7 +8,7 @@ class ClassificationsController < ApplicationController
 
   def call_types
     authorize! :index, :classifications
-    add_breadcrumb("Call Types", call_types_classifications_path)
+    add_breadcrumb('Call Types', call_types_classifications_path)
 
     # Select data_sets that have at least one field with
     # common_type = Classification::CALL_TYPE
@@ -18,6 +18,6 @@ class ClassificationsController < ApplicationController
   private
 
   def set_breadcrumbs
-    add_breadcrumb("Classification", call_types_classifications_path)
+    add_breadcrumb('Classification', call_types_classifications_path)
   end
 end

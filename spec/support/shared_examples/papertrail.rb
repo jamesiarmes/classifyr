@@ -1,6 +1,6 @@
-RSpec.shared_examples "papertrail versioning" do |model, field|
-  describe "versioning" do
-    it "has versioning enabled on create" do
+RSpec.shared_examples 'papertrail versioning' do |model, field|
+  describe 'versioning' do
+    it 'has versioning enabled on create' do
       record = create(model)
 
       expect do

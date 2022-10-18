@@ -1,6 +1,6 @@
-RSpec.shared_examples "unauthorized" do |method, role|
-  context "when unauthorized" do
-    it "redirects to the dashboard" do
+RSpec.shared_examples 'unauthorized' do |method, role|
+  context 'when unauthorized' do
+    it 'redirects to the dashboard' do
       role = create(:role, name: role)
       user = create(:user, role:)
       sign_in user
