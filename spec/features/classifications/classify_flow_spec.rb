@@ -36,7 +36,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
   def go_to_classify(user, data_set, percent = 0, completion = "0/3")
     sign_in user
     visit root_path
-    find("#sidenav").click_on "Classification"
+    find_by_id("sidenav").click_on "Classification"
     check_data_set_card(data_set, percent, completion)
 
     find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.slug}/classify']", match: :first).click
@@ -92,7 +92,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       go_to_classify(jack, data_set_1)
       check_classify_page(unique_value_1_1)
 
-      find("#show-apco").click
+      find_by_id("show-apco").click
 
       first_cit = CommonIncidentType.first
       last_cit = CommonIncidentType.last
@@ -235,7 +235,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       # -------------------------------------------- #
       check_data_completion(data_set_1, 33, 1, 3)
 
-      find("#sidenav").click_on "Classification"
+      find_by_id("sidenav").click_on "Classification"
       check_data_set_card(data_set_1, 33, "1/3")
     end
   end

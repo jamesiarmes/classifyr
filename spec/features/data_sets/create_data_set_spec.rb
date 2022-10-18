@@ -10,7 +10,7 @@ RSpec.describe "Create a data set", type: :feature do
 
       visit root_path
 
-      find("#sidenav").click_on "Datasets"
+      find_by_id("sidenav").click_on "Datasets"
       click_on "Upload Dataset"
 
       fill_in "Title", with: "New Data Set"
@@ -80,7 +80,7 @@ RSpec.describe "Create a data set", type: :feature do
 
       sign_in user
       visit root_path
-      find("#sidenav").click_on "Datasets"
+      find_by_id("sidenav").click_on "Datasets"
 
       find(:xpath, "//a[@href='/data_sets/#{data_set.slug}/map']", match: :first).click
 
