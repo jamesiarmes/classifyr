@@ -72,16 +72,7 @@ class UniqueValue < ApplicationRecord
   end
 
   def generate_examples
-    data = []
-
-    field.data_set.datafile.with_file do |f|
-      CSV.foreach(f, headers: true) do |row|
-        data << row.values_at if row[field.heading] == value
-        break if data.length >= EXAMPLE_COUNT
-      end
-    end
-
-    data
+    field.data_set.data_source.examples(heading: field.heading, value:)
   end
 
   private

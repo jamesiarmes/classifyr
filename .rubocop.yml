@@ -16,6 +16,15 @@ AllCops:
     - "config/environments/*"
     - "node_modules/**/*"
 
+Metrics/AbcSize:
+  CountRepeatedAttributes: false
+
+Metrics/MethodLength:
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+
 Naming/VariableNumber:
   EnforcedStyle: non_integer
   AllowedIdentifiers:

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a data set', type: :feature do
+RSpec.describe 'Create a data set' do
   let(:role) { create(:role, name: :data_admin) }
   let(:user) { create(:user, role:) }
 
@@ -16,7 +16,8 @@ RSpec.describe 'Create a data set', type: :feature do
       click_on 'Upload Dataset'
 
       fill_in 'Title', with: 'New Data Set'
-      attach_file('data_set_files', File.absolute_path('spec/support/files/police-incidents-2022.csv'))
+      select 'CSV', from: 'data_set_data_source_attributes_type'
+      attach_file('data_set_data_source_attributes_files', File.absolute_path('spec/support/files/police-incidents-2022.csv'))
 
       click_on 'Upload Dataset'
 
@@ -50,7 +51,7 @@ RSpec.describe 'Create a data set', type: :feature do
 
   context 'when modifying mappings' do
     let(:data_set) do
-      create(:data_set, files: [
+      create(:data_set, :with_csv, files: [
                Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
              ])
     end

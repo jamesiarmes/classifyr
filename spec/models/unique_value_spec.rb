@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UniqueValue, type: :model do
+RSpec.describe UniqueValue do
   include_examples 'valid factory', :unique_value
   include_examples 'papertrail versioning', :unique_value, 'value'
   include_examples 'associations', :unique_value, %i[field classifications users]
@@ -17,7 +17,7 @@ RSpec.describe UniqueValue, type: :model do
 
     context 'when slug is already taken' do
       it 'appends a UUID to the slug' do
-        data_set = create(:data_set, title: 'My Data Set')
+        data_set = create(:data_set, :with_csv, title: 'My Data Set')
         field = create(:field, data_set:)
         unique_value_1 = create(:unique_value, field:, value: 'Minor Issue')
         unique_value_2 = create(:unique_value, field:, value: 'Minor Issue')
@@ -34,8 +34,8 @@ RSpec.describe UniqueValue, type: :model do
     let(:jack) { create(:user, role:) }
     let(:john) { create(:user, role:) }
 
-    let(:data_set_1) { create(:data_set, completion_percent: 33) }
-    let(:data_set_2) { create(:data_set, completion_percent: 15) }
+    let(:data_set_1) { create(:data_set, :with_csv, completion_percent: 33) }
+    let(:data_set_2) { create(:data_set, :with_csv, completion_percent: 15) }
 
     let(:field_1) { create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE) }
     let(:field_2) { create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE) }
@@ -217,7 +217,8 @@ RSpec.describe UniqueValue, type: :model do
 
     describe '#find_or_generate_examples' do
       it 'stores the examples' do
-        data_set = create(:data_set, files: [
+        # TODO: Update!
+        data_set = create(:data_set, :with_csv, files: [
                             Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
                           ])
 
@@ -258,7 +259,8 @@ RSpec.describe UniqueValue, type: :model do
 
     describe '#generate_examples' do
       it 'generate examples from the file' do
-        data_set = create(:data_set, files: [
+        # TODO: Update!
+        data_set = create(:data_set, :with_csv, files: [
                             Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
                           ])
 

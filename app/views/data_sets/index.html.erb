@@ -17,7 +17,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Location</th>
                 <th scope="col">Timeframe</th>
-                <th scope="col">Files</th>
+                <th scope="col">Source Type</th>
                 <th scope="col">Rows</th>
                 <th scope="col">Fields</th>
                 <th></th>
@@ -32,16 +32,13 @@
                   <td><%= location(data_set) %></td>
                   <td><%= data_set.timeframe %></td>
                   <td>
-                    <% data_set.files.each do |file| %>
-                      <%= file.filename %>
-                      <br>
-                    <% end %>
+                    <%= data_set.data_source&.type_name %>
                   </td>
                   <td>
                     <%= data_set.row_count %>
                   </td>
                   <td>
-                    <%= data_set.datafile.headers ? data_set.files.first.headers.split(',').count : 0 %>
+                    <%= data_set.fields.count %>
                   </td>
                   <td>
                     <div class="inline-block ml-2">

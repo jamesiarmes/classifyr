@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+# ruby '3.1.2'
 ruby '3.1.2'
 
 gem 'active_storage_validations', '~> 0.9'
@@ -25,6 +26,9 @@ gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0', '>= 7.0.2.3'
 gem 'seed_dump', '~> 3.3'
 gem 'sprockets-rails', '~> 3.4'
+
+gem 'soda-ruby', '~> 1.0'
+
 gem 'stimulus-rails', '~> 1.1'
 gem 'tailwindcss-rails', '2.0.12'
 gem 'turbo-rails', '~> 1.1'
@@ -39,6 +43,13 @@ group :development, :test do
   gem 'pry', '~> 0.14'
   gem 'rspec-github', '~> 2.3'
   gem 'rspec-rails', '~> 5.1'
+
+  # gem 'debase', '~> 0.2.5.beta2'
+  # source 'file:///opt/classifyr/repo'
+  # gem 'debase', '3.0.0.beta.5'
+  # gem 'debase', source: 'file:///opt/classifyr/repo'
+  # gem 'debase', source: 'file:///Users/jamesarmes/IdeaProjects/classifyr/repo'
+  # gem 'ruby-debug-ide'
 end
 
 group :development do

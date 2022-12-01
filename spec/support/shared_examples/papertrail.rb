@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'papertrail versioning' do |model, field|
+RSpec.shared_examples 'papertrail versioning' do |model, field, trait: nil|
   describe 'versioning' do
     it 'has versioning enabled on create' do
-      record = create(model)
+      record = create(model, trait)
 
       expect do
         record.update(field => 1)

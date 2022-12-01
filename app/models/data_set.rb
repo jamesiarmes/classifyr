@@ -2,17 +2,21 @@
 
 # Represents a dataset to be classified.
 # TODO: Refactor to remove disabled cops.
-class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class DataSet < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: %i[slugged history]
 
   has_paper_trail
 
+  # TODO: Remove the files attachment after data sources have been deployed.
   has_many_attached :files, dependent: :destroy
+
   has_many :fields, dependent: :destroy
+  belongs_to :data_source, polymorphic: true, optional: false, dependent: :destroy
+
+  accepts_nested_attributes_for :data_source, update_only: true
 
   validates :title, presence: true
-  validates :files, attached: true
 
   attr_accessor :step
 
@@ -25,6 +29,10 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def should_generate_new_friendly_id?
     title_changed? || super
+  end
+
+  def build_data_source(*params)
+    self.data_source = DataSource.new(*params)
   end
 
   def call_type_field
@@ -40,15 +48,11 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def storage_size
-    files.sum(&:byte_size)
+    data_source&.storage_size
   end
 
   def row_count
-    files.sum(&:row_count)
-  end
-
-  def datafile
-    files.first
+    data_source&.record_count
   end
 
   def emergency_categories
@@ -89,23 +93,10 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def prepare_datamap # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def prepare_datamap
     return unless fields.empty?
 
-    set_metadata!
-    datafile.with_file do |f|
-      contents = CSV.read(f, headers: true)
-      contents.headers.each_with_index do |heading, i|
-        fields.create heading:, position: i,
-                      unique_value_count: contents[heading].uniq.length,
-                      empty_value_count: contents[heading].count(''),
-                      sample_data: contents[heading].uniq[0..9]
-      end
-    end
-  end
-
-  def set_metadata!
-    files.each(&:set_metadata!)
+    data_source&.prepare_datamap
   end
 
   def map_fields(common_types)
@@ -114,25 +105,8 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def analyze! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    datafile.with_file do |f|
-      contents = CSV.read(f, headers: true)
-      fields.mapped.not_classified.each do |field|
-        field.min_value = contents[field.heading].compact.min
-        field.max_value = contents[field.heading].compact.max
-
-        # If the field has unique values, it has already been analyzed
-        if Field::VALUE_TYPES.include?(field.common_type) && field.unique_values.none?
-          contents[field.heading].uniq.each do |value|
-            field.unique_values.build value:,
-                                      frequency: contents[field.heading].count(value)
-          end
-        end
-
-        field.save!
-      end
-    end
-
+  def analyze!
+    data_source.analyze!
     update_attribute :analyzed, true # rubocop:disable Rails/SkipsModelValidations
     reload.update_completion
   end

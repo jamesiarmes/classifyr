@@ -4,10 +4,13 @@ FROM ruby:3.1.2
 RUN apt-get update -q && \
     apt-get upgrade -q -y && \
     apt-get install -q -y nodejs postgresql-client && \
+#    apt-get install -q -y libcurl4-openssl-dev libgcrypt11-dev libgnutls-dev libidn11-dev libldap2-dev librtmp-dev libtasn1-3-dev m4 && \
+    apt-get install -q -y libcurl4-openssl-dev libgcrypt20-dev libgnutls28-dev libidn11-dev libldap2-dev librtmp-dev libtasn1-6-dev m4 && \
     apt-get clean
 
 WORKDIR /opt/classifyr
 COPY . /opt/classifyr
+RUN gem update && gem cleanup
 RUN bundle install
 RUN rails assets:precompile
 

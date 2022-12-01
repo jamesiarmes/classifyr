@@ -7,7 +7,7 @@ class DataSetsController < ApplicationController
 
   def index
     authorize! :index, :data_sets
-    @data_sets = DataSet.includes(files_attachments: :blob).ordered
+    @data_sets = DataSet.includes(:data_source).ordered
   end
 
   def show
@@ -18,6 +18,7 @@ class DataSetsController < ApplicationController
   def new
     authorize! :create, :data_sets
     @data_set = DataSet.new
+    @data_set.build_data_source
     add_breadcrumb('Create a new dataset', nil)
   end
 
@@ -37,7 +38,7 @@ class DataSetsController < ApplicationController
     end
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     authorize! :update, :data_sets
     if params['data_set']['step'] == 'map_fields'
       @data_set.map_fields(params['data_set']['common_types'])
@@ -95,7 +96,8 @@ class DataSetsController < ApplicationController
     params.require(:data_set).permit(
       :title, :data_link, :api_links, :source, :exclusions, :license, :format,
       :documentation_link, :city, :state, :description, :has_911, :has_ems,
-      :has_fire, files: []
+      :has_fire,
+      data_source_attributes: [:type, :api_domain, :api_resource, :api_key, { files: [] }]
     )
   end
 

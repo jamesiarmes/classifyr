@@ -1,5 +1,6 @@
 import { Application } from "@hotwired/stimulus"
 import { Autocomplete } from 'stimulus-autocomplete'
+import RevealController from 'stimulus-reveal'
 
 const application = Application.start()
 
@@ -18,5 +19,6 @@ application.register('popover', Popover)
 application.register('toggle', Toggle)
 application.register('slideover', Slideover)
 application.register('autocomplete', Autocomplete)
+application.register('reveal', RevealController)
 
 export { application }

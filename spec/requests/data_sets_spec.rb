@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'DataSets', type: :request do
+RSpec.describe 'DataSets' do
   let(:user) { create(:user) }
-  let(:data_set) { create(:data_set) }
+  let(:data_set) { create(:data_set, :with_csv) }
 
   describe '#index' do
     let(:path) { '/data_sets' }
@@ -33,7 +33,7 @@ RSpec.describe 'DataSets', type: :request do
         end
 
         it 'returns all the data sets' do
-          data_sets = create_list(:data_set, 3)
+          data_sets = create_list(:data_set, 3, :with_csv)
           get(path)
           data_sets.each do |data_set|
             expect(response.body).to include(data_set.title)
@@ -143,9 +143,12 @@ RSpec.describe 'DataSets', type: :request do
       {
         data_set: {
           title: 'My Dataset',
-          files: [
-            Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
-          ]
+          data_source_attributes: {
+            type: 'CsvFile',
+            files: [
+              Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
+            ]
+          }
         }
       }
     end
@@ -170,14 +173,13 @@ RSpec.describe 'DataSets', type: :request do
           it 'returns an error' do
             post '/data_sets', params: {
               data_set: {
-                title: 'My Dataset',
-                files: []
+                title: ''
               }
             }
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(DataSet.count).to eq(0)
-            expect(response.body).to include('Files can&#39;t be blank')
+            expect(response.body).to include('Title can&#39;t be blank')
           end
         end
 
@@ -287,7 +289,7 @@ RSpec.describe 'DataSets', type: :request do
 
   describe '#map' do
     let(:data_set) do
-      create(:data_set, files: [
+      create(:data_set, :with_csv, files: [
                Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
              ])
     end
@@ -322,7 +324,7 @@ RSpec.describe 'DataSets', type: :request do
 
   describe '#analyze' do
     let(:data_set) do
-      create(:data_set, files: [
+      create(:data_set, :with_csv, files: [
                Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
              ])
     end

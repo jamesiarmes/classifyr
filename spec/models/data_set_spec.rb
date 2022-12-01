@@ -3,16 +3,16 @@
 require 'rails_helper'
 require 'csv'
 
-RSpec.describe DataSet, type: :model do
-  let(:data_set) { build(:data_set) }
+RSpec.describe DataSet do
+  let(:data_set) { build(:data_set, :with_csv) }
 
-  include_examples 'valid factory', :data_set
-  include_examples 'papertrail versioning', :data_set, 'title'
-  include_examples 'associations', :data_set, %i[files fields]
+  include_examples 'valid factory', :data_set, trait: :with_csv
+  include_examples 'papertrail versioning', :data_set, 'title', trait: :with_csv
+  include_examples 'associations', :data_set, %i[files fields], trait: :with_csv
 
   describe 'FriendlyID' do
     it 'updates the slug when the title changes' do
-      data_set = create(:data_set, title: 'My New Data Set')
+      data_set = create(:data_set, :with_csv, title: 'My New Data Set')
       expect(data_set.slug).to eq('my-new-data-set')
 
       data_set.update(title: 'My Updated Data Set')
@@ -23,9 +23,9 @@ RSpec.describe DataSet, type: :model do
   describe 'scopes' do
     describe 'ordered' do
       it 'sorts data sets by creation date (desc)' do
-        data_set_1 = create(:data_set)
-        data_set_2 = create(:data_set)
-        data_set_3 = create(:data_set)
+        data_set_1 = create(:data_set, :with_csv)
+        data_set_2 = create(:data_set, :with_csv)
+        data_set_3 = create(:data_set, :with_csv)
 
         expect(described_class.ordered).to eq([
                                                 data_set_3, data_set_2, data_set_1
@@ -36,11 +36,11 @@ RSpec.describe DataSet, type: :model do
     describe 'to_classify' do
       it "filters data sets with call type fields and sorts them by
           completion percent and creation date" do
-        data_set_1 = create(:data_set, id: 1)
-        data_set_2 = create(:data_set, id: 2)
-        data_set_3 = create(:data_set, id: 3)
-        data_set_4 = create(:data_set, id: 4)
-        _data_set_5 = create(:data_set, id: 5)
+        data_set_1 = create(:data_set, :with_csv, id: 1)
+        data_set_2 = create(:data_set, :with_csv, id: 2)
+        data_set_3 = create(:data_set, :with_csv, id: 3)
+        data_set_4 = create(:data_set, :with_csv, id: 4)
+        _data_set_5 = create(:data_set, :with_csv, id: 5)
 
         field_1 = create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE)
         field_2 = create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE)
@@ -73,7 +73,7 @@ RSpec.describe DataSet, type: :model do
   describe 'instance methods' do
     describe '#call_type_field' do
       it 'returns the data_set call_type field' do
-        set = create(:data_set)
+        set = create(:data_set, :with_csv)
         create(:field, data_set: set, common_type: Field::VALUE_TYPES[1])
         create(:field, data_set: set, common_type: Field::VALUE_TYPES[5])
         field = create(:field, data_set: set, common_type: Classification::CALL_TYPE)
@@ -85,7 +85,7 @@ RSpec.describe DataSet, type: :model do
     describe '#pick_value_to_classify_for' do
       it 'returns a unique_value to classify' do
         user = create(:user)
-        data_set = create(:data_set)
+        data_set = create(:data_set, :with_csv)
         field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
 
         unique_value_1 = create(:unique_value, field:)
@@ -100,14 +100,14 @@ RSpec.describe DataSet, type: :model do
     describe 'completed?' do
       context 'when completion_percent != 100' do
         it 'returns false' do
-          data_set = create(:data_set, completion_percent: 50)
+          data_set = create(:data_set, :with_csv, completion_percent: 50)
           expect(data_set.completed?).to be(false)
         end
       end
 
       context 'when completion_percent = 100' do
         it 'returns true' do
-          data_set = create(:data_set, completion_percent: 100)
+          data_set = create(:data_set, :with_csv, completion_percent: 100)
           expect(data_set.completed?).to be(true)
         end
       end
@@ -120,7 +120,7 @@ RSpec.describe DataSet, type: :model do
       let(:priority_field) { create(:field, :with_unique_values, common_type: 'Priority') }
 
       let(:data_set) do
-        create(:data_set, fields: [
+        create(:data_set, :with_csv, fields: [
                  emergency_field, call_field, detailed_call_field, priority_field
                ])
       end
@@ -157,14 +157,14 @@ RSpec.describe DataSet, type: :model do
       describe '#start_time' do
         context "when there is one field with common_type = 'Call Time" do
           it 'returns nil' do
-            data_set = create(:data_set, fields: [call_time_field])
+            data_set = create(:data_set, :with_csv, fields: [call_time_field])
             expect(data_set.start_time).to eq(Chronic.parse(datetime))
           end
         end
 
         context "when there are no fields with common_type != 'Call Time" do
           it 'returns the parsed time' do
-            data_set = create(:data_set)
+            data_set = create(:data_set, :with_csv)
             expect(data_set.start_time).to be_nil
           end
         end
@@ -172,7 +172,7 @@ RSpec.describe DataSet, type: :model do
     end
 
     describe '#map_fields' do
-      let(:data_set) { create(:data_set) }
+      let(:data_set) { create(:data_set, :with_csv) }
       let(:field) { create(:field, common_type: 'Something', position: 0, data_set:) }
       let!(:unique_value) { create(:unique_value, field:) }
 
@@ -231,7 +231,7 @@ RSpec.describe DataSet, type: :model do
 
     describe '#analyze!' do
       it 'analyses a datafile' do
-        data_set = create(:data_set, files: [
+        data_set = create(:data_set, :with_csv, files: [
                             Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
                           ])
 
@@ -263,7 +263,7 @@ RSpec.describe DataSet, type: :model do
         john = create(:user, role:)
         jane = create(:user, role:)
 
-        data_set = create(:data_set)
+        data_set = create(:data_set, :with_csv)
         field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
 
         unique_value_1 = create(:unique_value, field:) # 3/3, completed

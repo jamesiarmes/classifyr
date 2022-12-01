@@ -55,7 +55,7 @@ RSpec.describe Authorizer, type: :model do
 
     context 'when a record is passed' do
       context 'when policy does not exist' do
-        let(:record) { create(:data_set) }
+        let(:record) { create(:data_set, :with_csv) }
 
         it { is_expected.to be(true) }
       end

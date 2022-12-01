@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-RSpec.describe 'Classify call types', type: :feature, js: true do
+RSpec.describe 'Classify call types', js: true do
   let(:role) { create(:role, name: :data_classifier) }
   let(:jack) { create(:user, role:) }
   let(:john) { create(:user, role:) }
@@ -17,8 +17,8 @@ RSpec.describe 'Classify call types', type: :feature, js: true do
                                   notes: 'Intoxicated person, drunk & disorderly')
   end
 
-  let(:data_set_1) { create(:data_set) }
-  let(:data_set_2) { create(:data_set) }
+  let(:data_set_1) { create(:data_set, :with_csv) }
+  let(:data_set_2) { create(:data_set, :with_csv) }
 
   let(:field_1) { create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE) }
   let(:field_2) { create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE) }

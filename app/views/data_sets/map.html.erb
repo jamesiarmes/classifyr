@@ -31,10 +31,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% @fields.each_with_index do |field, position| %>
+                    <% @fields.each do |field| %>
                       <tr>
                         <td>
-                          <%= position %>
+                          <%= field.position %>
                         </td>
                         <td>
                           <%= link_to field.heading, '#', title: field.sample_data %>
@@ -46,7 +46,7 @@
                           <%= field.empty_value_count %>
                         </td>
                         <td>
-                          <%= form.select "common_types[#{position}]",
+                          <%= form.select "common_types[#{field.position}]",
                               options_for_select(
                                 Field::TYPES,
                                 selected: field.common_type,

@@ -2,8 +2,10 @@
   <%= form.label field,
       class: "mb-1 #{form.object.errors[field].any? ? "invalid" : ""} #{defined?(required) ? "required" : ""}" %>
   <%= form.select field,
-      options, {},
+      options,
+      defined?(html_options) ? html_options : {},
       {
+        data: defined?(data_elements) ? data_elements : {},
         class: "#{form.object.errors[field].any? ? "invalid" : ""} rounded-select",
         required: defined?(required) ? required : false
       } %>

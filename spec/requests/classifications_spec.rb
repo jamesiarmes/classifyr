@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Classifications', type: :request do
+RSpec.describe 'Classifications' do
   let(:user) { create(:user) }
 
   describe '#index' do
@@ -52,7 +52,7 @@ RSpec.describe 'Classifications', type: :request do
         before { sign_in user }
 
         it 'lists data sets in the expected order' do
-          data_set = create(:data_set)
+          data_set = create(:data_set, :with_csv)
           create(:field, data_set:, common_type: Classification::CALL_TYPE)
 
           get(path)

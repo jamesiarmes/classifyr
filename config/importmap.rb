@@ -12,3 +12,4 @@ pin 'tailwindcss-stimulus-components', to: 'https://ga.jspm.io/npm:tailwindcss-s
 pin 'stimulus-autocomplete', to: 'https://ga.jspm.io/npm:stimulus-autocomplete@3.0.2/src/autocomplete.js'
 pin 'chartkick', to: 'chartkick.js'
 pin 'Chart.bundle', to: 'Chart.bundle.js'
+pin 'stimulus-reveal', to: 'https://ga.jspm.io/npm:stimulus-reveal@1.4.2/dist/stimulus-reveal.esm.js'

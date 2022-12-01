@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_09_233712) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_032847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -101,7 +101,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_233712) do
     t.integer "completed_unique_values", default: 0
     t.integer "total_unique_values", default: 0
     t.string "slug"
+    t.string "api_domain"
+    t.string "api_resource"
+    t.string "api_key"
+    t.string "data_source_type", null: false
+    t.bigint "data_source_id", null: false
+    t.index ["data_source_type", "data_source_id"], name: "index_data_sets_on_data_source"
     t.index ["slug"], name: "index_data_sets_on_slug", unique: true
+  end
+
+  create_table "data_sources", force: :cascade do |t|
+    t.string "type"
+    t.string "name"
+    t.string "api_domain"
+    t.string "api_resource"
+    t.string "api_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fields", force: :cascade do |t|

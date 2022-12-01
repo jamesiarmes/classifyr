@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require 'socrata'
 
 # Represents a common incident type to be used for data classification.
 class CommonIncidentType < ApplicationRecord

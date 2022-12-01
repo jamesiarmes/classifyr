@@ -2,7 +2,7 @@
 
 # Application level helper methods.
 module ApplicationHelper
-  def us_states # rubocop:disable Metrics/MethodLength
+  def us_states
     [
       ['', nil],
       %w[Alabama AL],

@@ -36,9 +36,37 @@
   <%= render "shared/form/select", form: form,
                                    field: :state,
                                    options: options_for_select(us_states, form.object.state) %>
-  <% if action_name == 'new' || action_name == 'create' %>
-    <%= render "shared/form/file_field", form: form, field: :files, required: true %>
-  <% end %>
+
+  <div class="data-source" data-controller="select">
+    <%= form.fields_for :data_source do |subform| %>
+      <%= render 'shared/form/select', form: subform,
+                 field: :type, required: true,
+                 options: options_for_select({ 'CSV' => 'CsvFile', 'Socrata' => 'Socrata' }, data_set.data_source),
+                 html_options: { include_blank: 'Select a data source' },
+                 data_elements: { action: 'change->select#changed', select_target: 'select', require: true } %>
+      <div class="data-source-details">
+        <div data-select-target="element" data-select-value="CsvFile">
+          <% if action_name == 'new' || action_name == 'create' %>
+            <%= render 'shared/form/file_field', form: subform, field: :files, multiple: false %>
+          <% end %>
+        </div>
+
+        <div data-select-target="element" data-select-value="Socrata">
+          <%= render 'shared/form/text_field', form: subform,
+                                               field: :api_domain,
+                                               placeholder: 'data.example.com' %>
+          <%= render 'shared/form/text_field', form: subform,
+                                               field: :api_key,
+                                               placeholder: 'Key required to access the API, if any' %>
+          <%= render 'shared/form/text_field', form: subform,
+                                               field: :api_resource,
+                                               placeholder: 'Name of the resource containing the data'  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
   <div class="mb-12">
     <fieldset>
       <div class="mt-4 space-y-4">
