@@ -139,6 +139,9 @@ GEM
     bullet (7.1.6)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -454,6 +457,7 @@ DEPENDENCIES
   bootsnap (~> 1.12)
   brakeman (~> 5.3)
   bullet (~> 7.0)
+  bundler-audit (~> 0.9)
   capybara (~> 3.37)
   capybara-screenshot (~> 1.0)
   chartkick
