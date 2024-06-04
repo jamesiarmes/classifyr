@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_09_233712) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_04_011053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -74,7 +74,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_233712) do
     t.string "humanized_code"
     t.string "humanized_description"
     t.text "humanized_notes"
-    t.index "to_tsvector('simple'::regconfig, COALESCE((code)::text, ''::text))", name: "index_common_incident_types_on_code", using: :gin
     t.index ["standard", "code_version", "code"], name: "index_common_incident_types_on_standard_and_version_and_code"
   end
 

@@ -73,10 +73,8 @@ RSpec.describe 'DataSets', type: :request do
             data_set.update(title: 'Chicago Data 2022')
             expect(old_slug).not_to eq(data_set.slug)
 
-            get "/data_sets/#{old_slug}"
-            expect(response.body).to include(
-              'You are being <a href="http://www.example.com/data_sets/chicago-data-2022">redirected</a>.'
-            )
+            get("/data_sets/#{old_slug}")
+            expect(response.headers['Location']).to eq('http://www.example.com/data_sets/chicago-data-2022')
           end
         end
       end
