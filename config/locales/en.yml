@@ -66,3 +66,23 @@ en:
     update:
       mapped: "Fields were successfully mapped."
       success: "Data set was successfully updated."
+  schemas:
+    title: "Schemas"
+    create:
+      success: "Schema was successfully created."
+    destroy:
+      success: "Schema was successfully destroyed."
+    edit:
+      breadcrumb: "Modify %{title}"
+      description: "Modify the current schema."
+      title: "Modify Schema"
+    form:
+      create: "Define Schema"
+      update: "Update Schema"
+    new:
+      description: "Define a new schema for data set mapping."
+      title: "Define Schema"
+    show:
+      edit: "Modify Schema"
+    update:
+      success: "Schema was successfully updated."

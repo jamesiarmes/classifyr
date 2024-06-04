@@ -1,0 +1,14 @@
+<div class="w-full">
+  <%= render 'shared/header',
+             title: @schema.title,
+             description: t('.description')
+  %>
+  <div class="responsive-container">
+    <div class="my-12 px-4 py-5 sm:px-6">
+      <div id="users" class="header">
+        <%= render "form", schema: @schema %>
+        <%= link_to 'Cancel', schema_path(@schema), class: "button-cancel" %>
+      </div>
+    </div>
+  </div>
+</div>

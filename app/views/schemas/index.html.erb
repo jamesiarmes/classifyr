@@ -1,0 +1,38 @@
+<div class="w-full">
+  <%= render 'shared/header',
+             title: "Schemas",
+             description: "List of the schemas available for mapping.",
+             links: [],
+             buttons: [
+               { label: 'Define Schema', href: new_schema_path }
+             ]
+  %>
+  <div class="responsive-container">
+    <div class="mt-12 py-5">
+      <section class="px-6 pb-6 bg-white">
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead class="bg-gray-50 border-b">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Fields</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @schemas.each do |schema| %>
+              <tr class="row">
+                <td>
+                  <%= link_to schema.title, schema %>
+                </td>
+                <td>??</td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+</div>

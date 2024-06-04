@@ -33,7 +33,7 @@ class DataSetsController < ApplicationController
     if @data_set.save
       redirect_to map_data_set_path(@data_set), notice: t('.success')
     else
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

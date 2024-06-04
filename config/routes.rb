@@ -24,6 +24,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  resources :schemas, param: :slug
+
   resources :common_incident_types, only: [] do
     collection do
       get 'search'

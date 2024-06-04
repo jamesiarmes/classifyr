@@ -1,0 +1,13 @@
+<div class="w-full">
+  <%= render 'shared/header',
+             title: @schema.title,
+             buttons: [
+               { label: t('.edit'), href: edit_schema_path(@schema) }
+             ]
+  %>
+  <div class="responsive-container">
+    <div class="mt-12 px-4 py-5 sm:px-6">
+      <%= render @schema %>
+    </div>
+  </div>
+</div>

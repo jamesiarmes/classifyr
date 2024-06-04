@@ -1,0 +1,10 @@
+<%= form_with(model: schema, class: "contents") do |form| %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :title,
+                                       required: true,
+                                       type: :text,
+                                       placeholder: "Enter a title" %>
+  <div class="inline">
+    <%= form.submit value: action_name == 'new' ? t('.create') : t('.update'), class: 'button' %>
+  </div>
+<% end %>
