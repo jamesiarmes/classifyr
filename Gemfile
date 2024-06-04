@@ -13,23 +13,23 @@ gem 'bootsnap', '~> 1.12', require: false
 gem 'chartkick'
 gem 'chronic', '~> 0.10.2'
 gem 'csv', '~> 3.2.0'
-gem 'devise', github: 'heartcombo/devise', ref: 'f8d1ea90bc3'
+gem 'devise', '~> 4.9'
 gem 'friendly_id', '~> 5.4.0'
 gem 'health-monitor-rails', '~> 9.3'
 gem 'importmap-rails', '~> 1.1'
 gem 'jbuilder', '~> 2.11'
 gem 'kaminari', '~> 1.2'
 gem 'mutex_m', '~> 0.2'
-gem 'paper_trail', '~> 12.3'
+gem 'paper_trail', '~> 15.0'
 gem 'pg', '~> 1.4'
 gem 'pg_search', '~> 2.3'
 gem 'puma', '~> 5.6'
 gem 'rack', '~> 2.0'
-gem 'rails', '~> 7.0.0', '>= 7.0.2.3'
+gem 'rails', '~> 7.1.0'
 gem 'seed_dump', '~> 3.3'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.1'
-gem 'tailwindcss-rails', '2.0.12'
+gem 'tailwindcss-rails', '~> 2.6'
 gem 'turbo-rails', '~> 1.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
@@ -42,7 +42,7 @@ group :development, :test do
   gem 'faker', '~> 2.21'
   gem 'pry', '~> 0.14'
   gem 'rspec-github', '~> 2.3'
-  gem 'rspec-rails', '~> 5.1'
+  gem 'rspec-rails', '~> 6.1'
 end
 
 group :development do

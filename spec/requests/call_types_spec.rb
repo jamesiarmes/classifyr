@@ -31,6 +31,7 @@ RSpec.describe 'CallTypes', type: :request do
 
         it 'shows the classification page' do
           get(path)
+          get(response.headers['Location'])
 
           expect(response.body).to include(data_set.title)
           expect(response.body).to include(unique_value.value)

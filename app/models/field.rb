@@ -24,7 +24,6 @@ class Field < ApplicationRecord
   scope :classified, -> { joins(:classifications).distinct }
   scope :not_classified, -> { where.missing(:classifications).distinct }
   scope :mapped, -> { where("fields.common_type IS NOT NULL AND fields.common_type != ''") }
-  scope :with_values, -> { where(common_type: VALUE_TYPES) }
   scope :without_values, -> { where.not(common_type: VALUE_TYPES) }
 
   def classified?

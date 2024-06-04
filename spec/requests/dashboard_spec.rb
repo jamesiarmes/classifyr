@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Dashboards', type: :request do
-  describe '#index' do
-    let(:path) { '/dashboards' }
+  let(:path) { '/dashboards' }
 
+  describe '#index' do
     include_examples 'unauthenticated', :get
 
     context 'when authenticated' do
@@ -41,7 +41,6 @@ RSpec.describe 'Dashboards', type: :request do
 
       it "does include the 'Users' menu item" do
         get(path)
-        get(response.headers['Location'])
 
         html = Nokogiri::HTML(response.body.to_s)
         users_link = html.css('//a[@href="/admin/users"]')
