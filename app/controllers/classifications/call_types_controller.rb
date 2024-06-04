@@ -5,7 +5,7 @@ module Classifications
   class CallTypesController < ApplicationController
     before_action :set_data_set, only: [:index]
     before_action :set_call_type, only: %i[show create]
-    before_action :disable_turbo, only: %i[show create]
+    before_action :disable_turbo, only: %i[show]
     before_action :set_breadcrumbs
     before_action :set_show_breacrumbs, only: [:show]
 

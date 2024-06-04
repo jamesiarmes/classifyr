@@ -3,11 +3,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.3.2'
 
 gem 'active_storage_validations', '~> 0.9'
 gem 'aws-sdk-rails', '~> 3.6'
 gem 'aws-sdk-s3', '~> 1.114'
+gem 'base64', '~> 0.2'
 gem 'bootsnap', '~> 1.12', require: false
 gem 'chartkick'
 gem 'chronic', '~> 0.10.2'
@@ -18,11 +19,13 @@ gem 'health-monitor-rails', '~> 9.3'
 gem 'importmap-rails', '~> 1.1'
 gem 'jbuilder', '~> 2.11'
 gem 'kaminari', '~> 1.2'
+gem 'mutex_m', '~> 0.2'
 gem 'paper_trail', '~> 12.3'
 gem 'pg', '~> 1.4'
 gem 'pg_search', '~> 2.3'
 gem 'puma', '~> 5.6'
-gem 'rails', '~> 7.0', '>= 7.0.2.3'
+gem 'rack', '~> 2.0'
+gem 'rails', '~> 7.0.0', '>= 7.0.2.3'
 gem 'seed_dump', '~> 3.3'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.1'
@@ -33,6 +36,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'bullet', '~> 7.0'
+  gem 'bundler-audit', '~> 0.9'
   gem 'debug', '~> 1.6', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.21'
